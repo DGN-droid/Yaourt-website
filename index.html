@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Yaourt — une sélection de yaourts artisanaux bio."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet" />
+    <title>Yaourt — Nature</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <!-- Navigation principale -->
+    <header class="site-header">
+      <nav class="navbar" aria-label="Navigation principale">
+        <div class="navbar__group navbar__group--left">
+          <a href="#nature" data-nav-filter="nature">Nature</a>
+          <a href="#fruite" data-nav-filter="aromes">Fruité</a>
+        </div>
+
+        <a class="brand" href="#top" aria-label="Yaourt, accueil" data-home-link>Yaourt</a>
+
+        <div class="navbar__group navbar__group--right">
+          <a href="#wishlist" data-wishlist-link>Wishlist</a>
+          <a href="#blog" data-blog-link>Blog</a>
+          <button class="icon-button" type="button" aria-label="Rechercher" data-search-toggle>
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <circle cx="10.8" cy="10.8" r="5.8"></circle>
+              <path d="m15.2 15.2 4 4"></path>
+            </svg>
+          </button>
+          <button class="icon-button cart-toggle" type="button" aria-label="Panier" data-cart-toggle>
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M4 7h16l-1.2 12H5.2L4 7Z"></path>
+              <path d="M8 8V5.8a4 4 0 0 1 8 0V8"></path>
+            </svg>
+            <span class="cart-count" aria-label="0 produit dans le panier">0</span>
+          </button>
+          <div class="language-menu">
+            <button class="language-selector" type="button" aria-label="Choisir la langue" aria-expanded="false" data-language-toggle>
+              <span class="language-current">FR</span> <span aria-hidden="true">⌄</span>
+            </button>
+            <div class="language-dropdown" hidden>
+              <button type="button" data-language="FR">FR</button>
+              <button type="button" data-language="EN">EN</button>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main id="top">
+      <!-- Cette navigation appartient uniquement à la vue produit hero. -->
+      <aside class="hero-sidebar" aria-label="Filtrer les yaourts">
+        <label class="sidebar-search">
+          <span class="sr-only">Rechercher</span>
+          <input type="search" placeholder="RECHERCHER" />
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <circle cx="10.8" cy="10.8" r="5.8"></circle>
+            <path d="m15.2 15.2 4 4"></path>
+          </svg>
+        </label>
+
+        <nav class="category-menu sidebar__category" aria-label="Catégories">
+          <a href="#aromes" data-category="aromes">Arômes</a>
+          <a href="#bio" data-category="bio">Bio</a>
+          <a href="#dessert" data-category="dessert">Dessert</a>
+          <a class="is-active" href="#nature" aria-current="page" data-category="nature">Nature</a>
+          <div class="category-menu__subcategories" aria-label="Variétés nature">
+            <a class="category-menu__sublink is-current" href="#yaourts-nature" data-subcategory="nature">Nature</a>
+            <a href="#brebis" data-subcategory="brebis">Brebis</a>
+            <a href="#chevre" data-subcategory="chevre">Chèvre</a>
+            <a href="#grec" data-subcategory="grec">Grec</a>
+            <a href="#fermier" data-subcategory="fermier">Fermier</a>
+            <a href="#sans-lactose" data-subcategory="sans-lactose">Sans Lactose</a>
+          </div>
+        </nav>
+      </aside>
+
+      <section class="hero" id="nature" aria-labelledby="product-title">
+        <div class="view-toggles" aria-label="Mode d'affichage">
+          <button class="icon-button is-active" type="button" aria-label="Vue grille" data-catalog-view="grid">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <rect x="4" y="4" width="6" height="6"></rect>
+              <rect x="14" y="4" width="6" height="6"></rect>
+              <rect x="4" y="14" width="6" height="6"></rect>
+              <rect x="14" y="14" width="6" height="6"></rect>
+            </svg>
+          </button>
+          <button class="icon-button" type="button" aria-label="Vue liste" data-catalog-view="list">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M7 6h13M7 12h13M7 18h13"></path>
+              <circle cx="4" cy="6" r=".8" fill="currentColor"></circle>
+              <circle cx="4" cy="12" r=".8" fill="currentColor"></circle>
+              <circle cx="4" cy="18" r=".8" fill="currentColor"></circle>
+            </svg>
+          </button>
+        </div>
+
+        <div class="hero__visuals" aria-hidden="true">
+          <!-- Remplacez ces zones par des images de produits dans /assets. -->
+          <div class="product-image product-image-blur-left"></div>
+          <div class="product-image product-image-main"></div>
+          <div class="product-image product-image-blur-right"></div>
+        </div>
+
+        <div class="hero__content">
+          <p class="hero__eyebrow">Collection essentielle</p>
+          <h1 id="product-title">Yaourt Nature</h1>
+          <p class="hero__description">Pot Artisanal Bio <span aria-hidden="true">|</span> 3,50€</p>
+          <a class="button-pill" href="#yaourts-nature">Voir plus</a>
+        </div>
+      </section>
+
+      <!-- Vue détaillée : elle remplace visuellement la hero à la demande. -->
+      <section class="product-detail" aria-hidden="true" aria-labelledby="detail-product-title">
+        <button class="detail-back" type="button" aria-label="Retour à la sélection">← Retour</button>
+
+        <div class="detail-product-image" aria-hidden="true"></div>
+
+        <div class="detail-content">
+          <p class="detail-price">3,50€</p>
+
+          <div class="detail-variants" aria-label="Variantes disponibles">
+            <button class="variant-swatch is-active" type="button" aria-label="Variante nature" aria-pressed="true" data-variant="0"><span></span></button>
+            <button class="variant-swatch" type="button" aria-label="Variante douce" aria-pressed="false" data-variant="1"><span></span></button>
+          </div>
+
+          <label class="format-select">
+            <span class="sr-only">Choisir le format</span>
+            <select>
+              <option value="125g">Format : 125g</option>
+              <option value="150g">Format : 150g</option>
+              <option value="200g">Format : 200g</option>
+            </select>
+          </label>
+
+          <div class="detail-product-heading">
+            <h1 id="detail-product-title">YAOURT NATURE</h1>
+            <p>Pot Artisanal</p>
+          </div>
+
+          <div class="detail-actions">
+            <button class="add-to-cart" type="button" data-add-to-cart>
+              <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 7h16l-1.2 12H5.2L4 7Z"></path><path d="M8 8V5.8a4 4 0 0 1 8 0V8"></path></svg>
+              Ajouter au panier
+            </button>
+            <button class="wishlist-button" type="button" aria-label="Ajouter à la wishlist" aria-pressed="false" data-wishlist-toggle>♡</button>
+          </div>
+
+          <p class="detail-description">Un yaourt nature au lait entier bio, lentement brassé pour une texture généreuse, douce et délicatement acidulée.</p>
+
+          <div class="accordions" data-accordion-group>
+            <article class="accordion-item">
+              <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="accordion-details">
+                Détails <span class="accordion-chevron" aria-hidden="true">⌄</span>
+              </button>
+              <div class="accordion-panel" id="accordion-details" hidden>
+                <p>Ingrédients : lait entier bio fermenté. Lait collecté en France. À conserver entre 0°C et 6°C.</p>
+              </div>
+            </article>
+            <article class="accordion-item">
+              <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="accordion-delivery">
+                Livraison et Retours <span class="accordion-chevron" aria-hidden="true">⌄</span>
+              </button>
+              <div class="accordion-panel" id="accordion-delivery" hidden>
+                <p>Livraison réfrigérée sous 48 h. Les retours sont possibles pour tout produit non ouvert, selon nos conditions.</p>
+              </div>
+            </article>
+            <article class="accordion-item">
+              <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="accordion-reviews">
+                Avis (<span class="review-count">24</span>) <span class="accordion-chevron" aria-hidden="true">⌄</span>
+              </button>
+              <div class="accordion-panel" id="accordion-reviews" hidden>
+                <p>Nos clients apprécient sa texture crémeuse, son goût franc et sa simplicité.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Vue catalogue : le contenu de la grille est généré depuis main.js. -->
+      <section class="product-catalog" aria-hidden="true" aria-label="Catalogue de yaourts">
+        <div class="catalog-view-toggles view-toggles" aria-label="Mode d'affichage">
+          <button class="icon-button is-active" type="button" aria-label="Vue grille" data-catalog-view="grid">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><rect x="4" y="4" width="6" height="6"></rect><rect x="14" y="4" width="6" height="6"></rect><rect x="4" y="14" width="6" height="6"></rect><rect x="14" y="14" width="6" height="6"></rect></svg>
+          </button>
+          <button class="icon-button" type="button" aria-label="Vue liste" data-catalog-view="list">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M7 6h13M7 12h13M7 18h13"></path><circle cx="4" cy="6" r=".8" fill="currentColor"></circle><circle cx="4" cy="12" r=".8" fill="currentColor"></circle><circle cx="4" cy="18" r=".8" fill="currentColor"></circle></svg>
+          </button>
+        </div>
+        <div class="catalog-grid" aria-live="polite"></div>
+      </section>
+    </main>
+    <div class="header-search" aria-hidden="true">
+      <label><span class="sr-only">Rechercher dans le catalogue</span><input type="search" placeholder="RECHERCHER" data-header-search-input /></label>
+    </div>
+    <div class="drawer-backdrop" hidden></div>
+    <aside class="cart-drawer" aria-hidden="true" aria-label="Votre panier">
+      <div class="drawer-header"><h2>Panier</h2><button type="button" aria-label="Fermer le panier" data-cart-close>×</button></div>
+      <div class="cart-items"></div>
+      <p class="cart-empty">Votre panier est vide.</p>
+      <div class="cart-footer">
+        <p>Total <strong data-cart-total>0,00€</strong></p>
+        <button class="checkout-button" type="button" data-checkout disabled>Passer commande</button>
+      </div>
+    </aside>
+    <div class="toast" role="status" aria-live="polite"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="js/main.js"></script>
+  </body>
+</html>
