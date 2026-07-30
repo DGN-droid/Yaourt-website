@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;700&display=swap" rel="stylesheet" />
-    <title>Yaourt — Nature</title>
+    <title>Yaourt — Catalogue</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
@@ -18,11 +18,16 @@
     <header class="site-header">
       <nav class="navbar" aria-label="Navigation principale">
         <div class="navbar__group navbar__group--left">
-          <a href="#nature" data-nav-filter="nature">Nature</a>
-          <a href="#fruite" data-nav-filter="aromes">Fruité</a>
+          <a href="#yaourt" data-nav-filter="yaourt">YAOURT</a>
+          <a href="#dessert" data-nav-filter="dessert">DESSERT</a>
+          <a href="#plats" data-nav-filter="plats">PLATS</a>
         </div>
 
-        <a class="brand" href="#top" aria-label="Yaourt, accueil" data-home-link>Yaourt</a>
+        <div class="navbar__center">
+          <a href="#top" class="navbar__logo-link" aria-label="Yaourt, accueil" data-home-link>
+            <img src="asset/images/logo/logo.jpeg" alt="Seton's Delight" class="navbar__logo-img" />
+          </a>
+        </div>
 
         <div class="navbar__group navbar__group--right">
           <a href="#wishlist" data-wishlist-link>Wishlist</a>
@@ -49,6 +54,26 @@
               <button type="button" data-language="EN">EN</button>
             </div>
           </div>
+          <div class="theme-selector">
+            <button class="theme-selector__toggle" type="button" aria-label="Thème">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+              </svg>
+            </button>
+            <div class="theme-dropdown" hidden>
+              <button class="theme-dropdown__item" type="button" data-theme="light">Light</button>
+              <button class="theme-dropdown__item" type="button" data-theme="dark">Dark</button>
+              <button class="theme-dropdown__item" type="button" data-theme="system">Système</button>
+            </div>
+          </div>
         </div>
       </nav>
     </header>
@@ -65,20 +90,11 @@
           </svg>
         </label>
 
-        <nav class="category-menu sidebar__category" aria-label="Catégories">
-          <a href="#aromes" data-category="aromes">Arômes</a>
-          <a href="#bio" data-category="bio">Bio</a>
-          <a href="#dessert" data-category="dessert">Dessert</a>
-          <a class="is-active" href="#nature" aria-current="page" data-category="nature">Nature</a>
-          <div class="category-menu__subcategories" aria-label="Variétés nature">
-            <a class="category-menu__sublink is-current" href="#yaourts-nature" data-subcategory="nature">Nature</a>
-            <a href="#brebis" data-subcategory="brebis">Brebis</a>
-            <a href="#chevre" data-subcategory="chevre">Chèvre</a>
-            <a href="#grec" data-subcategory="grec">Grec</a>
-            <a href="#fermier" data-subcategory="fermier">Fermier</a>
-            <a href="#sans-lactose" data-subcategory="sans-lactose">Sans Lactose</a>
-          </div>
-        </nav>
+        <ul class="sidebar__categories">
+          <li class="sidebar__category sidebar__category--active"><a href="#" data-category="yaourt">YAOURT</a></li>
+          <li class="sidebar__category"><a href="#" data-category="dessert">DESSERT</a></li>
+          <li class="sidebar__category"><a href="#" data-category="plats">PLATS</a></li>
+        </ul>
       </aside>
 
       <section class="hero" id="nature" aria-labelledby="product-title">
@@ -102,6 +118,16 @@
         </div>
 
         <div class="hero__visuals" aria-hidden="true">
+          <button class="hero__arrow hero__arrow--left" type="button" aria-label="Produit précédent">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <button class="hero__arrow hero__arrow--right" type="button" aria-label="Produit suivant">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </button>
           <!-- Remplacez ces zones par des images de produits dans /assets. -->
           <div class="product-image product-image-blur-left"></div>
           <div class="product-image product-image-main"></div>
@@ -110,9 +136,9 @@
 
         <div class="hero__content">
           <p class="hero__eyebrow">Collection essentielle</p>
-          <h1 id="product-title">Yaourt Nature</h1>
-          <p class="hero__description">Pot Artisanal Bio <span aria-hidden="true">|</span> 3,50€</p>
-          <a class="button-pill" href="#yaourts-nature">Voir plus</a>
+          <h1 id="product-title">YAOURT 1</h1>
+          <p class="hero__description">Pot crémeux artisanal <span aria-hidden="true">|</span> 2 300 FCFA</p>
+          <a class="button-pill" href="#yaourts">Voir plus</a>
         </div>
       </section>
 
@@ -123,7 +149,7 @@
         <div class="detail-product-image" aria-hidden="true"></div>
 
         <div class="detail-content">
-          <p class="detail-price">3,50€</p>
+          <p class="detail-price">2 300 FCFA</p>
 
           <div class="detail-variants" aria-label="Variantes disponibles">
             <button class="variant-swatch is-active" type="button" aria-label="Variante nature" aria-pressed="true" data-variant="0"><span></span></button>
@@ -205,10 +231,42 @@
       <div class="cart-items"></div>
       <p class="cart-empty">Votre panier est vide.</p>
       <div class="cart-footer">
-        <p>Total <strong data-cart-total>0,00€</strong></p>
-        <button class="checkout-button" type="button" data-checkout disabled>Passer commande</button>
+        <p>Total <strong data-cart-total>0 FCFA</strong></p>
+        <button class="checkout-button cart-drawer__checkout" type="button" data-checkout disabled>Passer commande</button>
       </div>
     </aside>
+    <section class="checkout-contact" aria-hidden="true">
+      <button class="checkout-contact__close" type="button" aria-label="Fermer">×</button>
+      <div class="checkout-contact__content">
+        <h2 class="checkout-contact__title">Veuillez nous écrire pour passer votre commande</h2>
+        <p class="checkout-contact__subtitle">Notre équipe vous répond rapidement pour confirmer votre commande.</p>
+
+        <div class="checkout-contact__options">
+          <a href="https://wa.me/PLACEHOLDER_NUMERO_WHATSAPP" target="_blank" rel="noopener" class="checkout-contact__card checkout-contact__card--whatsapp">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+              <path d="M12.004 2.003c-5.514 0-9.997 4.483-9.997 9.997 0 1.762.462 3.484 1.34 5.003l-1.42 5.18a.75.75 0 0 0 .921.921l5.18-1.42a9.958 9.958 0 0 0 4.976 1.313h.004c5.514 0 9.997-4.483 9.997-9.997s-4.483-9.997-9.997-9.997zm0 18.194h-.003a8.19 8.19 0 0 1-4.176-1.144l-.3-.178-3.076.843.843-3.076-.178-.3a8.19 8.19 0 0 1-1.144-4.176c0-4.531 3.687-8.216 8.217-8.216 4.531 0 8.217 3.687 8.217 8.217 0 4.531-3.687 8.216-8.217 8.216z"/>
+            </svg>
+            <div class="checkout-contact__info">
+              <span class="checkout-contact__label">WhatsApp</span>
+              <span class="checkout-contact__value">+PLACEHOLDER_NUMERO_WHATSAPP</span>
+            </div>
+          </a>
+
+          <a href="https://instagram.com/PLACEHOLDER_INSTAGRAM" target="_blank" rel="noopener" class="checkout-contact__card checkout-contact__card--instagram">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+              <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+            </svg>
+            <div class="checkout-contact__info">
+              <span class="checkout-contact__label">Instagram</span>
+              <span class="checkout-contact__value">@PLACEHOLDER_INSTAGRAM</span>
+            </div>
+          </a>
+        </div>
+      </div>
+    </section>
     <div class="toast" role="status" aria-live="polite"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
