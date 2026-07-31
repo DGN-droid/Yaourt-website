@@ -11,6 +11,7 @@ const translations = {
       yaourt: "YAOURT",
       dessert: "DESSERT",
       plats: "PLATS",
+      about: "À PROPOS",
       wishlist: "Wishlist",
       blog: "Blog",
       search: "Rechercher",
@@ -22,6 +23,23 @@ const translations = {
       eyebrow: "Collection essentielle",
       button: "Voir plus",
       empty: "Aucun produit ne correspond à cette sélection.",
+    },
+    about: {
+      back: "← Retour",
+      eyebrow: "NOTRE HISTOIRE",
+      title: "Le goût de l'authentique, depuis toujours",
+      intro: "Seton's Delight est né d'une conviction simple : une cuisine généreuse et sincère mérite d'être accessible à tous, préparée avec les mêmes égards qu'un repas de famille.",
+      historyTitle: "Notre histoire",
+      historyText: "Tout a commencé dans une petite cuisine, animée par la passion de transmettre des recettes authentiques et généreuses. Ce qui n'était au départ qu'une envie de partager de bons plats avec nos proches est devenu, avec le temps, une véritable adresse de confiance pour celles et ceux qui recherchent une cuisine préparée avec soin, des yaourts artisanaux jusqu'aux plats mijotés traditionnels. Année après année, nous avons affiné nos recettes, sélectionné nos producteurs avec exigence, et construit une relation de confiance avec notre clientèle, fidèle à une même promesse : de la qualité, de la fraîcheur, et du goût.",
+      missionTitle: "Notre mission",
+      missionText: "Offrir une alimentation savoureuse, saine et accessible, préparée chaque jour avec des ingrédients sélectionnés avec exigence. Nous croyons qu'un bon repas commence toujours par de bons produits, une préparation soignée, et l'attention portée aux détails qui font toute la différence.",
+      valuesTitle: "Nos valeurs",
+      values: [["Qualité avant tout", "Des ingrédients soigneusement sélectionnés, une préparation artisanale, sans compromis sur le goût ni sur la fraîcheur."], ["Authenticité", "Des recettes transmises et perfectionnées avec le temps, respectueuses des traditions culinaires qui nous inspirent."], ["Proximité", "Une relation directe et à l'écoute de notre clientèle, du choix des produits jusqu'à la livraison."], ["Engagement", "Un service fiable et attentif, pensé pour s'adapter aux besoins de chacun, à chaque commande."]],
+      servicesTitle: "Nos services de livraison",
+      servicesText: "Nous mettons tout en œuvre pour que votre commande vous parvienne dans les meilleures conditions, quel que soit votre besoin.",
+      delivery: [["Livraison standard", "Livraison en 24 à 48h sur l'ensemble de notre zone de couverture. Idéale pour vos commandes du quotidien, sans contrainte particulière d'horaire."], ["Livraison express", "Besoin d'être livré rapidement ? Notre option express permet une livraison sous quelques heures selon votre zone et nos disponibilités du moment. Contactez-nous directement pour vérifier l'éligibilité de votre commande."], ["Livraisons spéciales & événements", "Pour vos anniversaires, réunions d'entreprise, cérémonies ou tout autre événement particulier, nous proposons un service de livraison sur-mesure : quantités adaptées, créneaux horaires spécifiques, et présentation soignée pour l'occasion. Ces livraisons sont soumises à certaines conditions — n'hésitez pas à nous consulter pour organiser votre commande dans les meilleures conditions."], ["Zones de livraison & conditions", "Nous livrons actuellement dans un rayon défini autour de notre point de préparation. Un montant minimum de commande peut s'appliquer selon la distance. Pour toute zone en dehors de notre périmètre habituel, contactez-nous : une solution peut généralement être trouvée selon la demande."]],
+      ctaText: "Une question, une demande particulière ou une commande spéciale à organiser ?",
+      ctaButton: "NOUS CONTACTER",
     },
     detail: {
       back: "← Retour",
@@ -73,6 +91,7 @@ const translations = {
       yaourt: "YOGURT",
       dessert: "DESSERT",
       plats: "PLATES",
+      about: "ABOUT",
       wishlist: "Wishlist",
       blog: "Blog",
       search: "Search",
@@ -84,6 +103,23 @@ const translations = {
       eyebrow: "Essential collection",
       button: "View more",
       empty: "No product matches this selection.",
+    },
+    about: {
+      back: "← Back",
+      eyebrow: "OUR STORY",
+      title: "The taste of authenticity, always",
+      intro: "Seton's Delight was born from a simple belief: generous, honest food should be within everyone's reach and prepared with the same care as a family meal.",
+      historyTitle: "Our story",
+      historyText: "It all began in a small kitchen, driven by a passion for sharing authentic, generous recipes. What started as a wish to serve good food to our loved ones has, over time, become a trusted address for people looking for carefully prepared cuisine, from artisan yogurts to traditional slow-cooked dishes. Year after year, we have refined our recipes, selected our producers with exacting care, and built a relationship of trust with customers who remain loyal to one promise: quality, freshness, and flavour.",
+      missionTitle: "Our mission",
+      missionText: "To offer tasty, wholesome, accessible food, prepared every day with ingredients selected to exacting standards. We believe every good meal starts with good products, thoughtful preparation, and attention to the details that make all the difference.",
+      valuesTitle: "Our values",
+      values: [["Quality first", "Carefully selected ingredients and artisan preparation, with no compromise on flavour or freshness."], ["Authenticity", "Recipes passed down and refined over time, respectful of the culinary traditions that inspire us."], ["Closeness", "A direct, attentive relationship with our customers, from product selection through delivery."], ["Commitment", "Reliable, considerate service designed to adapt to everyone's needs, with every order."]],
+      servicesTitle: "Our delivery services",
+      servicesText: "We do everything possible to ensure your order reaches you in the best conditions, whatever your needs.",
+      delivery: [["Standard delivery", "Delivery within 24 to 48 hours throughout our coverage area. Ideal for everyday orders without a specific timing requirement."], ["Express delivery", "Need your order quickly? Our express option provides delivery within a few hours depending on your area and current availability. Contact us directly to check whether your order is eligible."], ["Special deliveries & events", "For birthdays, business meetings, ceremonies, or any other special event, we offer a tailored delivery service: adapted quantities, specific delivery slots, and presentation suited to the occasion. These deliveries are subject to certain conditions — please contact us so we can arrange your order in the best possible conditions."], ["Delivery areas & conditions", "We currently deliver within a defined radius around our preparation site. A minimum order amount may apply depending on distance. For areas outside our usual perimeter, contact us: a solution can generally be found depending on your request."]],
+      ctaText: "A question, a special request, or a custom order to arrange?",
+      ctaButton: "CONTACT US",
     },
     detail: {
       back: "← Back",
@@ -393,6 +429,7 @@ function updateCategoryActiveState(filter) {
 /** Affiche le catalogue avec la vue et le filtre demandés. */
 function showCatalog(event, filter = filtreActif, listView = catalogueEnListe) {
   event?.preventDefault();
+  if (document.body.classList.contains("about-page-open")) closeAboutPageInstant();
   if (transitionEnCours || document.body.classList.contains("product-detail-open")) return;
   filtreActif = filter;
   catalogueEnListe = listView;
@@ -440,6 +477,7 @@ function closeProductDetailInstant() {
 
 function navigateToCatalog(event, category) {
   event.preventDefault();
+  if (document.body.classList.contains("about-page-open")) closeAboutPageInstant();
   if (document.body.classList.contains("product-detail-open")) closeProductDetailInstant();
   showCatalog(null, category);
 }
@@ -471,6 +509,7 @@ function createImageProxy(source, destination) {
 /** Ouvre la fiche depuis la hero ou une carte, sans décaler les données. */
 function showProductDetail(event, sourceImage = null) {
   event?.preventDefault();
+  if (document.body.classList.contains("about-page-open")) closeAboutPageInstant();
   if (transitionEnCours || document.body.classList.contains("product-detail-open")) return;
   transitionEnCours = true;
   window.clearInterval(carouselInterval);
@@ -534,6 +573,10 @@ function goBackToHero() {
 /** Ramène immédiatement les liens globaux à la page d'accueil. */
 function showHero(event) {
   event?.preventDefault();
+  if (document.body.classList.contains("about-page-open")) {
+    hideAboutPage();
+    return;
+  }
   if (document.body.classList.contains("product-detail-open")) {
     goBackToHero();
     return;
@@ -547,24 +590,71 @@ function showHero(event) {
   startProductCarousel();
 }
 
+function showAboutPage(event) {
+  event?.preventDefault();
+  if (transitionEnCours || document.body.classList.contains("about-page-open")) return;
+  if (document.body.classList.contains("product-detail-open")) closeProductDetailInstant();
+
+  const { hero, sidebar } = getHeroElements();
+  const catalog = document.querySelector(".product-catalog");
+  const about = document.querySelector(".about-page");
+  window.clearInterval(carouselInterval);
+  document.body.classList.remove("catalog-open");
+  catalog.style.display = "none";
+  catalog.setAttribute("aria-hidden", "true");
+  gsap.set([hero, sidebar], { autoAlpha: 0, scale: 1 });
+  about.style.display = "block";
+  about.scrollTop = 0;
+  about.setAttribute("aria-hidden", "false");
+  document.body.classList.add("about-page-open");
+  initAccordions();
+  gsap.fromTo(about, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.4, ease: "power2.out" });
+}
+
+function hideAboutPage() {
+  const { hero, sidebar } = getHeroElements();
+  const about = document.querySelector(".about-page");
+  gsap.to(about, { autoAlpha: 0, duration: 0.28, ease: "power2.in", onComplete: () => {
+    about.style.display = "none";
+    about.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("about-page-open");
+    gsap.to([hero, sidebar], { autoAlpha: 1, scale: 1, duration: 0.32, ease: "power2.out" });
+    startProductCarousel();
+  } });
+}
+
+function closeAboutPageInstant() {
+  const about = document.querySelector(".about-page");
+  gsap.killTweensOf(about);
+  gsap.set(about, { display: "none", autoAlpha: 1 });
+  about.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("about-page-open");
+}
+
 function initAccordions() {
-  const items = document.querySelectorAll(".accordion-item");
-  items.forEach((item) => item.querySelector(".accordion-trigger").addEventListener("click", () => {
-    const trigger = item.querySelector(".accordion-trigger");
-    const shouldOpen = trigger.getAttribute("aria-expanded") !== "true";
-    items.forEach((otherItem) => {
-      const otherTrigger = otherItem.querySelector(".accordion-trigger");
-      const panel = otherItem.querySelector(".accordion-panel");
-      if (otherItem === item && shouldOpen) {
-        panel.hidden = false;
-        gsap.fromTo(panel, { height: 0, autoAlpha: 0 }, { height: "auto", autoAlpha: 1, duration: 0.35, ease: "power2.out" });
-        otherTrigger.setAttribute("aria-expanded", "true");
-      } else if (otherTrigger.getAttribute("aria-expanded") === "true") {
-        gsap.to(panel, { height: 0, autoAlpha: 0, duration: 0.25, onComplete: () => { panel.hidden = true; gsap.set(panel, { clearProps: "height,opacity" }); } });
-        otherTrigger.setAttribute("aria-expanded", "false");
-      }
+  document.querySelectorAll("[data-accordion-group]").forEach((group) => {
+    const items = group.querySelectorAll(".accordion-item");
+    items.forEach((item) => {
+      const trigger = item.querySelector(".accordion-trigger");
+      if (trigger.dataset.accordionReady) return;
+      trigger.dataset.accordionReady = "true";
+      trigger.addEventListener("click", () => {
+        const shouldOpen = trigger.getAttribute("aria-expanded") !== "true";
+        items.forEach((otherItem) => {
+          const otherTrigger = otherItem.querySelector(".accordion-trigger");
+          const panel = otherItem.querySelector(".accordion-panel");
+          if (otherItem === item && shouldOpen) {
+            panel.hidden = false;
+            gsap.fromTo(panel, { height: 0, autoAlpha: 0 }, { height: "auto", autoAlpha: 1, duration: 0.35, ease: "power2.out" });
+            otherTrigger.setAttribute("aria-expanded", "true");
+          } else if (otherTrigger.getAttribute("aria-expanded") === "true") {
+            gsap.to(panel, { height: 0, autoAlpha: 0, duration: 0.25, onComplete: () => { panel.hidden = true; gsap.set(panel, { clearProps: "height,opacity" }); } });
+            otherTrigger.setAttribute("aria-expanded", "false");
+          }
+        });
+      });
     });
-  }));
+  });
 }
 
 function updateCart() {
@@ -771,6 +861,32 @@ function renderHeaderSearchResults(query) {
   `).join("") : `<p class="header-search__empty">${translations[currentLang].misc.searchEmpty}</p>`;
 }
 
+function applyAboutTranslations(about) {
+  const t = translations[currentLang].about;
+  about.querySelector(".about-page__back").textContent = t.back;
+  about.querySelector(".about-page__eyebrow").textContent = t.eyebrow;
+  about.querySelector(".about-page__title").textContent = t.title;
+  about.querySelector(".about-page__intro").textContent = t.intro;
+  const sections = about.querySelectorAll(".about-page__section");
+  sections[0].querySelector(".about-page__section-title").textContent = t.historyTitle;
+  sections[0].querySelector(".about-page__text").textContent = t.historyText;
+  sections[1].querySelector(".about-page__section-title").textContent = t.missionTitle;
+  sections[1].querySelector(".about-page__text").textContent = t.missionText;
+  sections[2].querySelector(".about-page__section-title").textContent = t.valuesTitle;
+  about.querySelectorAll(".about-page__value").forEach((value, index) => {
+    value.querySelector("h3").textContent = t.values[index][0];
+    value.querySelector("p").textContent = t.values[index][1];
+  });
+  sections[3].querySelector(".about-page__section-title").textContent = t.servicesTitle;
+  sections[3].querySelector(".about-page__text").textContent = t.servicesText;
+  about.querySelectorAll(".about-page__accordions .accordion-item").forEach((item, index) => {
+    item.querySelector(".accordion-label").textContent = t.delivery[index][0];
+    item.querySelector(".accordion-panel p").textContent = t.delivery[index][1];
+  });
+  about.querySelector(".about-page__cta p").textContent = t.ctaText;
+  about.querySelector("[data-about-contact]").textContent = t.ctaButton;
+}
+
 function applyLanguage(lang = currentLang) {
   currentLang = lang;
   const t = translations[currentLang];
@@ -779,6 +895,7 @@ function applyLanguage(lang = currentLang) {
   navLeft[0].textContent = t.nav.yaourt;
   navLeft[1].textContent = t.nav.dessert;
   navLeft[2].textContent = t.nav.plats;
+  navLeft[3].textContent = t.nav.about;
   navRight[0].textContent = t.nav.wishlist;
   navRight[1].textContent = t.nav.blog;
   document.querySelector("[data-language-toggle]").querySelector(".language-current").textContent = t.nav.language;
@@ -797,11 +914,11 @@ function applyLanguage(lang = currentLang) {
   document.querySelector(".add-to-cart").lastChild.textContent = t.detail.addToCart;
   document.querySelector(".format-select .sr-only").textContent = t.detail.chooseFormat;
   document.querySelector(".format-select select").innerHTML = t.detail.formats.map((label, index) => `<option value="${[125, 150, 200][index]}g">${label}</option>`).join("");
-  document.querySelectorAll(".accordion-trigger").forEach((trigger, index) => {
+  document.querySelectorAll(".product-detail .accordion-trigger").forEach((trigger, index) => {
     const label = trigger.querySelector(".accordion-label");
     if (label) label.textContent = t.detail.accordion[index];
   });
-  document.querySelectorAll(".accordion-panel p").forEach((panel, index) => {
+  document.querySelectorAll(".product-detail .accordion-panel p").forEach((panel, index) => {
     panel.textContent = t.detail.accordionContent[index];
   });
   document.querySelector(".cart-empty").textContent = t.detail.cartEmpty;
@@ -811,6 +928,7 @@ function applyLanguage(lang = currentLang) {
   document.querySelector(".checkout-contact__subtitle").textContent = t.detail.checkoutSubtitle;
   document.querySelector("[data-cart-close]").setAttribute("aria-label", t.detail.close);
   document.querySelector("[data-cart-toggle]").setAttribute("aria-label", t.nav.cart);
+  applyAboutTranslations(document.querySelector(".about-page"));
   document.querySelectorAll("[data-language]").forEach((option) => {
     option.classList.toggle("is-active", option.dataset.language.toLowerCase() === lang);
   });
@@ -845,6 +963,9 @@ function initEventListeners() {
     restartProductCarousel();
   });
   document.querySelector(".detail-back").addEventListener("click", goBackToHero);
+  document.querySelector("[data-page='about']").addEventListener("click", showAboutPage);
+  document.querySelector(".about-page__back").addEventListener("click", hideAboutPage);
+  document.querySelector("[data-about-contact]").addEventListener("click", openCheckoutContact);
   document.querySelector("[data-home-link]").addEventListener("click", showHero);
   document.querySelectorAll("[data-nav-filter]").forEach((link) => link.addEventListener("click", (event) => navigateToCatalog(event, link.dataset.navFilter)));
   document.querySelectorAll("[data-category]").forEach((link) => link.addEventListener("click", (event) => navigateToCatalog(event, link.dataset.category)));
