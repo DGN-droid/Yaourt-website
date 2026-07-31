@@ -17,7 +17,7 @@
     <!-- Navigation principale -->
     <header class="site-header">
       <nav class="navbar" aria-label="Navigation principale">
-        <div class="navbar__group navbar__group--left">
+        <div id="mobile-navigation" class="navbar__group navbar__group--left">
           <a href="#yaourt" data-nav-filter="yaourt">YAOURT</a>
           <a href="#dessert" data-nav-filter="dessert">DESSERT</a>
           <a href="#plats" data-nav-filter="plats">PLATS</a>
@@ -76,6 +76,9 @@
             </div>
           </div>
         </div>
+        <button class="menu-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-navigation" data-menu-toggle>
+          <span></span><span></span><span></span>
+        </button>
       </nav>
     </header>
 

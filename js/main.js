@@ -320,12 +320,12 @@ function transitionProduit(nouvelIndex, direction = "next") {
   oldImageClone.classList.add("product-image-receding");
   image.parentElement.appendChild(oldImageClone);
 
-  const xShift = direction === "next" ? 72 : -72;
+  const xShift = direction === "next" ? 42 : -42;
   transitionEnCours = true;
   heroCurrentIndex = nouvelIndex;
 
   const tl = gsap.timeline({
-    defaults: { ease: "power3.inOut" },
+    defaults: { ease: "power2.inOut" },
     onComplete: () => {
       transitionEnCours = false;
       oldImageClone.remove();
@@ -333,22 +333,19 @@ function transitionProduit(nouvelIndex, direction = "next") {
   });
 
   tl.to(oldImageClone, {
-    scale: 0.76,
-    opacity: 0.2,
-    filter: "blur(16px)",
-    x: direction === "next" ? -84 : 84,
-    rotation: direction === "next" ? -5 : 5,
-    duration: 1.18,
-    ease: "power3.inOut",
+    scale: 0.9,
+    opacity: 0,
+    filter: "blur(8px)",
+    x: direction === "next" ? -42 : 42,
+    duration: 0.82,
   }, 0);
 
   tl.set(image, {
     backgroundImage: asBackgroundImage(produit.image),
-    scale: 0.86,
+    scale: 0.96,
     opacity: 0,
-    filter: "blur(16px)",
+    filter: "blur(8px)",
     x: xShift,
-    rotation: direction === "next" ? 4 : -4,
   }, 0);
 
   tl.to(image, {
@@ -357,9 +354,8 @@ function transitionProduit(nouvelIndex, direction = "next") {
     filter: "blur(0px)",
     x: 0,
     rotation: 0,
-    duration: 1.15,
-    ease: "power3.out",
-  }, 0.06);
+    duration: 0.82,
+  }, 0);
 
   tl.to([title, description], { autoAlpha: 0, y: -10, duration: 0.28 }, 0);
   tl.add(() => {
@@ -376,7 +372,7 @@ function afficherProduitSuivant() {
 
 function startProductCarousel() {
   window.clearInterval(carouselInterval);
-  carouselInterval = window.setInterval(afficherProduitSuivant, 3700);
+  carouselInterval = window.setInterval(afficherProduitSuivant, 4300);
 }
 
 function restartProductCarousel() {
@@ -949,6 +945,33 @@ function toggleLanguageMenu() {
   if (open) gsap.fromTo(menu, { autoAlpha: 0, y: -5 }, { autoAlpha: 1, y: 0, duration: 0.18 });
 }
 
+function closeMobileMenu() {
+  const navbar = document.querySelector(".navbar");
+  const toggle = document.querySelector("[data-menu-toggle]");
+  const menu = document.querySelector("#mobile-navigation");
+  navbar.classList.remove("menu-is-open");
+  if (!window.matchMedia("(max-width: 760px)").matches) {
+    menu.inert = false;
+    menu.removeAttribute("aria-hidden");
+    return;
+  }
+  menu.inert = true;
+  menu.setAttribute("aria-hidden", "true");
+  toggle.setAttribute("aria-expanded", "false");
+  toggle.setAttribute("aria-label", "Ouvrir le menu");
+}
+
+function toggleMobileMenu() {
+  const navbar = document.querySelector(".navbar");
+  const toggle = document.querySelector("[data-menu-toggle]");
+  const menu = document.querySelector("#mobile-navigation");
+  const isOpen = navbar.classList.toggle("menu-is-open");
+  menu.inert = !isOpen;
+  menu.setAttribute("aria-hidden", String(!isOpen));
+  toggle.setAttribute("aria-expanded", String(isOpen));
+  toggle.setAttribute("aria-label", isOpen ? "Fermer le menu" : "Ouvrir le menu");
+}
+
 /** Tous les écouteurs sont initialisés de façon centralisée après le DOM. */
 function initEventListeners() {
   document.querySelector(".button-pill").addEventListener("click", showProductDetail);
@@ -963,11 +986,19 @@ function initEventListeners() {
     restartProductCarousel();
   });
   document.querySelector(".detail-back").addEventListener("click", goBackToHero);
-  document.querySelector("[data-page='about']").addEventListener("click", showAboutPage);
+  document.querySelectorAll("[data-page='about']").forEach((link) => link.addEventListener("click", (event) => {
+    closeMobileMenu();
+    showAboutPage(event);
+  }));
   document.querySelector(".about-page__back").addEventListener("click", hideAboutPage);
   document.querySelector("[data-about-contact]").addEventListener("click", openCheckoutContact);
   document.querySelector("[data-home-link]").addEventListener("click", showHero);
-  document.querySelectorAll("[data-nav-filter]").forEach((link) => link.addEventListener("click", (event) => navigateToCatalog(event, link.dataset.navFilter)));
+  document.querySelectorAll("[data-nav-filter]").forEach((link) => link.addEventListener("click", (event) => {
+    closeMobileMenu();
+    navigateToCatalog(event, link.dataset.navFilter);
+  }));
+  document.querySelector("[data-menu-toggle]").addEventListener("click", toggleMobileMenu);
+  window.addEventListener("resize", closeMobileMenu);
   document.querySelectorAll("[data-category]").forEach((link) => link.addEventListener("click", (event) => navigateToCatalog(event, link.dataset.category)));
   document.querySelectorAll("[data-catalog-view]").forEach((toggle) => toggle.addEventListener("click", (event) => {
     const filter = toggle.closest(".hero") ? "all" : filtreActif;
@@ -991,7 +1022,12 @@ function initEventListeners() {
     const panel = document.querySelector(".header-search");
     if (panel.classList.contains("is-open") && !panel.contains(event.target) && !event.target.closest("[data-search-toggle]")) closeSearch();
   });
-  document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeSearch(); });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      closeSearch();
+      closeMobileMenu();
+    }
+  });
   document.querySelector(".sidebar-search input").addEventListener("input", (event) => { rechercheActive = event.target.value; showCatalog(null, filtreActif, catalogueEnListe); });
   document.querySelector("[data-cart-toggle]").addEventListener("click", openCart);
   document.querySelector("[data-cart-close]").addEventListener("click", closeCart);
@@ -1047,6 +1083,7 @@ function init() {
   initHeroAnimation();
   initAccordions();
   initEventListeners();
+  closeMobileMenu();
   startProductCarousel();
 }
 
