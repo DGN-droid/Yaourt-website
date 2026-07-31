@@ -1450,8 +1450,9 @@ body.about-page-open {
     align-items: stretch;
     gap: 0;
     padding: 10px 17px 18px;
-    border-bottom: 1px solid var(--border-color);
-    background: var(--bg-color);
+    border-bottom: 1px solid #c9a77e;
+    background: #fffaf5;
+    color: #5a3000;
     box-shadow: 0 12px 22px rgba(0, 0, 0, 0.08);
     opacity: 0;
     visibility: hidden;
@@ -1467,7 +1468,7 @@ body.about-page-open {
 
   .navbar__group--left a {
     padding: 14px 0;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid #d9ba94;
     font-size: 12px;
   }
 
