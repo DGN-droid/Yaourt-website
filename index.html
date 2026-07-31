@@ -223,7 +223,11 @@
       </section>
     </main>
     <div class="header-search" aria-hidden="true">
-      <label><span class="sr-only">Rechercher dans le catalogue</span><input type="search" placeholder="RECHERCHER" data-header-search-input /></label>
+      <div class="header-search__box">
+        <label><span class="sr-only">Rechercher dans le catalogue</span><input type="search" placeholder="Rechercher un produit..." data-header-search-input /></label>
+        <button class="header-search__close" type="button" aria-label="Fermer la recherche" data-search-close>×</button>
+      </div>
+      <div class="header-search__results" data-header-search-results></div>
     </div>
     <div class="drawer-backdrop" hidden></div>
     <aside class="cart-drawer" aria-hidden="true" aria-label="Votre panier">

@@ -3,6 +3,7 @@
 const EUR_TO_CFA_RATE = 655;
 const FCFA_STEP = 50;
 let currentLang = "fr";
+let currentThemePreference = null;
 
 const translations = {
   fr: {
@@ -61,7 +62,8 @@ const translations = {
     },
     misc: {
       openSearch: "Rechercher",
-      searchPlaceholder: "RECHERCHER",
+      searchPlaceholder: "Rechercher un produit...",
+      searchEmpty: "Aucun résultat",
       reviewLabel: "Avis",
       detailsTitle: "Détails",
     },
@@ -122,7 +124,8 @@ const translations = {
     },
     misc: {
       openSearch: "Search",
-      searchPlaceholder: "SEARCH",
+      searchPlaceholder: "Search for a product...",
+      searchEmpty: "No results",
       reviewLabel: "Reviews",
       detailsTitle: "Details",
     },
@@ -420,6 +423,27 @@ function updateViewToggles() {
   });
 }
 
+/** Ferme la fiche sans rejouer le retour hero lorsque la destination est le catalogue. */
+function closeProductDetailInstant() {
+  const detail = document.querySelector(".product-detail");
+  const catalog = document.querySelector(".product-catalog");
+  const revealItems = detail.querySelectorAll(".detail-price, .detail-variants, .format-select, .detail-product-heading, .detail-actions, .detail-description, .accordions");
+  gsap.killTweensOf([detail, ...revealItems]);
+  document.querySelectorAll(".product-image-transition").forEach((proxy) => proxy.remove());
+  gsap.set(detail, { display: "none", autoAlpha: 1 });
+  detail.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("product-detail-open");
+  if (document.body.classList.contains("catalog-open")) gsap.set(catalog, { autoAlpha: 1, scale: 1 });
+  window.clearInterval(carouselInterval);
+  transitionEnCours = false;
+}
+
+function navigateToCatalog(event, category) {
+  event.preventDefault();
+  if (document.body.classList.contains("product-detail-open")) closeProductDetailInstant();
+  showCatalog(null, category);
+}
+
 /** Met à jour la fiche, son format et l'état wishlist. */
 function updateProductDetail(variant = 0) {
   const produit = catalogue[produitActuel];
@@ -665,27 +689,19 @@ function closeCheckoutContact() {
   } });
 }
 
-function getCurrentThemePref() {
-  try {
-    return localStorage.getItem("yaourt-theme") || "system";
-  } catch {
-    return "system";
-  }
+function initTheme() {
+  applyTheme(currentThemePreference || "light");
 }
 
 function applyTheme(theme) {
   const themeMedia = window.matchMedia("(prefers-color-scheme: dark)");
-  try {
-    localStorage.setItem("yaourt-theme", theme);
-  } catch {
-    // localStorage unavailable in some environments, ignore gracefully.
-  }
+  currentThemePreference = theme;
 
   if (theme === "system") {
     const prefersDark = themeMedia.matches;
     document.body.classList.toggle("theme-dark", prefersDark);
     themeMedia.addEventListener("change", (event) => {
-      if (getCurrentThemePref() === "system") {
+      if (currentThemePreference === "system") {
         document.body.classList.toggle("theme-dark", event.matches);
       }
     });
@@ -716,9 +732,43 @@ function toggleWishlist() {
 function toggleSearch() {
   const panel = document.querySelector(".header-search");
   const input = document.querySelector("[data-header-search-input]");
-  const opening = panel.getAttribute("aria-hidden") === "true";
-  panel.setAttribute("aria-hidden", String(!opening));
-  gsap.to(panel, { width: opening ? 250 : 0, autoAlpha: opening ? 1 : 0, duration: 0.25, ease: "power2.out", onComplete: () => { if (opening) input.focus(); } });
+  if (panel.classList.contains("is-open")) {
+    closeSearch();
+    return;
+  }
+  panel.classList.add("is-open");
+  panel.setAttribute("aria-hidden", "false");
+  input.focus();
+}
+
+function closeSearch() {
+  const panel = document.querySelector(".header-search");
+  const input = document.querySelector("[data-header-search-input]");
+  panel.classList.remove("is-open");
+  panel.setAttribute("aria-hidden", "true");
+  input.value = "";
+  document.querySelector("[data-header-search-results]").innerHTML = "";
+}
+
+function normalizeSearch(value) {
+  return value.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLocaleLowerCase("fr");
+}
+
+function renderHeaderSearchResults(query) {
+  const resultsBox = document.querySelector("[data-header-search-results]");
+  const normalizedQuery = normalizeSearch(query.trim());
+  if (!normalizedQuery) {
+    resultsBox.innerHTML = "";
+    return;
+  }
+  const results = catalogue.filter((produit) => normalizeSearch(`${produit.nom} ${getLocalizedText(produit, "nom")}`).includes(normalizedQuery)).slice(0, 8);
+  resultsBox.innerHTML = results.length ? results.map((produit) => `
+    <button class="header-search__result" type="button" data-product-index="${produit.productIndex}">
+      <span class="header-search__result-image" style="background-image: url('${produit.image}')"></span>
+      <span class="header-search__result-name">${getLocalizedText(produit, "nom")}</span>
+      <span class="header-search__result-price">${produit.prix}</span>
+    </button>
+  `).join("") : `<p class="header-search__empty">${translations[currentLang].misc.searchEmpty}</p>`;
 }
 
 function applyLanguage(lang = currentLang) {
@@ -735,6 +785,7 @@ function applyLanguage(lang = currentLang) {
   document.querySelector(".language-current").textContent = t.nav.language;
   document.querySelector("[data-language-toggle]").setAttribute("aria-label", t.nav.language);
   document.querySelector("[data-search-toggle]").setAttribute("aria-label", t.nav.search);
+  document.querySelector("[data-header-search-input]").placeholder = t.misc.searchPlaceholder;
   document.querySelector(".cart-toggle").setAttribute("aria-label", t.nav.cart);
   document.querySelector("[data-home-link]").setAttribute("aria-label", t.nav.home);
   document.querySelector(".hero__eyebrow").textContent = t.hero.eyebrow;
@@ -763,6 +814,7 @@ function applyLanguage(lang = currentLang) {
   document.querySelectorAll("[data-language]").forEach((option) => {
     option.classList.toggle("is-active", option.dataset.language.toLowerCase() === lang);
   });
+  renderHeaderSearchResults(document.querySelector("[data-header-search-input]").value);
   renderProductGrid();
   updateCart();
   updateProductDetail();
@@ -794,14 +846,31 @@ function initEventListeners() {
   });
   document.querySelector(".detail-back").addEventListener("click", goBackToHero);
   document.querySelector("[data-home-link]").addEventListener("click", showHero);
-  document.querySelectorAll("[data-nav-filter]").forEach((link) => link.addEventListener("click", (event) => showCatalog(event, link.dataset.navFilter)));
-  document.querySelectorAll("[data-category]").forEach((link) => link.addEventListener("click", (event) => showCatalog(event, link.dataset.category)));
+  document.querySelectorAll("[data-nav-filter]").forEach((link) => link.addEventListener("click", (event) => navigateToCatalog(event, link.dataset.navFilter)));
+  document.querySelectorAll("[data-category]").forEach((link) => link.addEventListener("click", (event) => navigateToCatalog(event, link.dataset.category)));
   document.querySelectorAll("[data-catalog-view]").forEach((toggle) => toggle.addEventListener("click", (event) => {
     const filter = toggle.closest(".hero") ? "all" : filtreActif;
     showCatalog(event, filter, toggle.dataset.catalogView === "list");
   }));
   document.querySelector("[data-search-toggle]").addEventListener("click", toggleSearch);
-  document.querySelector("[data-header-search-input]").addEventListener("input", (event) => { rechercheActive = event.target.value; showCatalog(null, filtreActif, catalogueEnListe); });
+  document.querySelector("[data-search-close]").addEventListener("click", closeSearch);
+  document.querySelector("[data-header-search-input]").addEventListener("input", (event) => renderHeaderSearchResults(event.target.value));
+  document.querySelector("[data-header-search-results]").addEventListener("click", (event) => {
+    const result = event.target.closest(".header-search__result");
+    if (!result) return;
+    produitActuel = Number(result.dataset.productIndex);
+    closeSearch();
+    if (document.body.classList.contains("product-detail-open")) {
+      updateProductDetail();
+      return;
+    }
+    showProductDetail(null, document.querySelector(".product-image-main"));
+  });
+  document.addEventListener("click", (event) => {
+    const panel = document.querySelector(".header-search");
+    if (panel.classList.contains("is-open") && !panel.contains(event.target) && !event.target.closest("[data-search-toggle]")) closeSearch();
+  });
+  document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeSearch(); });
   document.querySelector(".sidebar-search input").addEventListener("input", (event) => { rechercheActive = event.target.value; showCatalog(null, filtreActif, catalogueEnListe); });
   document.querySelector("[data-cart-toggle]").addEventListener("click", openCart);
   document.querySelector("[data-cart-close]").addEventListener("click", closeCart);
@@ -847,7 +916,7 @@ function initEventListeners() {
 function init() {
   if (typeof gsap === "undefined") return;
   if (typeof ScrollTrigger !== "undefined") gsap.registerPlugin(ScrollTrigger);
-  applyTheme(getCurrentThemePref());
+  initTheme();
   applyLanguage(currentLang);
   renderProductGrid();
   updateCart();
