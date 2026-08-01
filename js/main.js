@@ -259,13 +259,12 @@ const catalogue = [...yaourt, ...dessert, ...plats].map((item, index) => ({
   ...item,
   productIndex: index,
 }));
-const heroProducts = yaourt;
+const heroProducts = catalogue;
 
 const panier = [];
 const wishlist = [];
 let produitActuel = 0;
-let heroCurrentIndex = 0;
-let carouselInterval;
+let heroSwiper;
 let transitionEnCours = false;
 let detailSourceElement;
 let filtreActif = "yaourt";
@@ -275,7 +274,7 @@ let catalogueEnListe = false;
 const getHeroElements = () => ({
   hero: document.querySelector(".hero"),
   sidebar: document.querySelector(".hero-sidebar"),
-  image: document.querySelector(".product-image-main"),
+  image: document.querySelector(".hero-swiper .swiper-slide-active .product-image-main") || document.querySelector(".hero-swiper .product-image-main"),
   title: document.querySelector("#product-title"),
   description: document.querySelector(".hero__description"),
 });
@@ -283,91 +282,91 @@ const getHeroElements = () => ({
 /** Transforme un chemin local en valeur CSS pour background-image. */
 const asBackgroundImage = (imagePath) => `url("${imagePath}")`;
 
-/** Animation d'entrée de la hero. */
+/** Animation d'entrée de la hero après l'initialisation de Swiper. */
 function initHeroAnimation() {
-  const { image, title, description } = getHeroElements();
-  const secondaryImages = document.querySelectorAll(".product-image-blur-left, .product-image-blur-right");
-  gsap.set(image, { autoAlpha: 0, filter: "blur(20px)", scale: 0.9 });
-  gsap.set(secondaryImages, { autoAlpha: 0, filter: "blur(8px)" });
+  const { title, description } = getHeroElements();
+  const images = document.querySelectorAll(".hero-swiper .product-image-main");
+  gsap.set(images, { autoAlpha: 0, scale: 0.94 });
   gsap.set([title, description], { autoAlpha: 0, y: 20 });
   gsap.timeline({ defaults: { ease: "power2.out" } })
-    .to(image, { autoAlpha: 1, filter: "blur(0px)", scale: 1, duration: 1 })
-    .to(secondaryImages, { autoAlpha: 0.35, duration: 0.65, stagger: 0.14 }, 0.28)
-    .to([title, description], { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.08 }, "+=0.3");
+    .to(images, { autoAlpha: 1, scale: 1, duration: 0.65, stagger: 0.03 })
+    .to([title, description], { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.08 }, "-=0.2");
 }
 
-function appliquerProduit(produit) {
-  const { image, title, description } = getHeroElements();
-  image.style.backgroundImage = asBackgroundImage(produit.image);
-  title.textContent = getLocalizedText(produit, "nom");
-  description.innerHTML = `${getLocalizedText(produit, "description")} <span aria-hidden="true">|</span> ${produit.prix}`;
+function buildHeroSwiperSlides() {
+  const wrapper = document.querySelector(".hero-swiper__wrapper");
+  if (!wrapper) return;
+  wrapper.innerHTML = heroProducts.map((produit, index) => `
+    <div class="swiper-slide hero-swiper__slide" data-product-index="${index}">
+      <div class="product-image product-image-main" style="background-image: url('${produit.image}')"></div>
+    </div>
+  `).join("");
 }
 
-function transitionProduit(nouvelIndex, direction = "next") {
-  if (transitionEnCours || document.body.classList.contains("product-detail-open") || document.body.classList.contains("catalog-open")) return;
-  const produit = heroProducts[nouvelIndex];
-  const { image, title, description } = getHeroElements();
-  const oldImageClone = image.cloneNode(true);
-  oldImageClone.classList.add("product-image-receding");
-  image.parentElement.appendChild(oldImageClone);
+function applyHeroSlideBlur(swiper) {
+  swiper.slides.forEach((slide) => {
+    const image = slide.querySelector(".product-image-main");
+    if (!image) return;
+    const distance = Math.abs(slide.progress);
+    gsap.set(image, {
+      filter: `blur(${Math.min(distance * 10, 10)}px)`,
+      opacity: Math.max(1 - distance * 0.5, 0.35),
+    });
+  });
+}
 
-  const xShift = direction === "next" ? 42 : -42;
-  transitionEnCours = true;
-  heroCurrentIndex = nouvelIndex;
+function applyHeroSlideBlurTransition(swiper, duration) {
+  swiper.slides.forEach((slide) => {
+    const image = slide.querySelector(".product-image-main");
+    if (image) gsap.to(image, { duration: duration / 1000, ease: "power2.out" });
+  });
+}
 
-  const tl = gsap.timeline({
-    defaults: { ease: "power2.inOut" },
-    onComplete: () => {
-      transitionEnCours = false;
-      oldImageClone.remove();
+function updateHeroContentFromActiveSlide() {
+  if (!heroSwiper) return;
+  const activeSlide = heroSwiper.slides[heroSwiper.activeIndex];
+  const productIndex = Number(activeSlide?.dataset.productIndex);
+  const produit = heroProducts[productIndex];
+  if (!produit) return;
+  produitActuel = produit.productIndex;
+  const { title, description } = getHeroElements();
+  gsap.timeline()
+    .to([title, description], { autoAlpha: 0, y: -10, duration: 0.2 })
+    .add(() => {
+      title.textContent = getLocalizedText(produit, "nom");
+      description.innerHTML = `${getLocalizedText(produit, "description")} <span aria-hidden="true">|</span> ${produit.prix}`;
+    })
+    .to([title, description], { autoAlpha: 1, y: 0, duration: 0.35 });
+}
+
+function initHeroSwiper() {
+  if (typeof Swiper === "undefined") return;
+  buildHeroSwiperSlides();
+  heroSwiper = new Swiper(".hero-swiper", {
+    effect: "coverflow",
+    grabCursor: true,
+    centeredSlides: true,
+    slidesPerView: "auto",
+    loop: true,
+    speed: 900,
+    coverflowEffect: { rotate: 0, stretch: 0, depth: 220, modifier: 1.4, slideShadows: false },
+    autoplay: { delay: 3800, disableOnInteraction: false, pauseOnMouseEnter: false },
+    navigation: { nextEl: ".hero__arrow--right", prevEl: ".hero__arrow--left" },
+    on: {
+      progress: applyHeroSlideBlur,
+      setTransition: applyHeroSlideBlurTransition,
+      slideChangeTransitionStart: updateHeroContentFromActiveSlide,
     },
   });
-
-  tl.to(oldImageClone, {
-    scale: 0.9,
-    opacity: 0,
-    filter: "blur(8px)",
-    x: direction === "next" ? -42 : 42,
-    duration: 0.82,
-  }, 0);
-
-  tl.set(image, {
-    backgroundImage: asBackgroundImage(produit.image),
-    scale: 0.96,
-    opacity: 0,
-    filter: "blur(8px)",
-    x: xShift,
-  }, 0);
-
-  tl.to(image, {
-    scale: 1,
-    opacity: 1,
-    filter: "blur(0px)",
-    x: 0,
-    rotation: 0,
-    duration: 0.82,
-  }, 0);
-
-  tl.to([title, description], { autoAlpha: 0, y: -10, duration: 0.28 }, 0);
-  tl.add(() => {
-    title.textContent = getLocalizedText(produit, "nom");
-    description.innerHTML = `${getLocalizedText(produit, "description")} <span aria-hidden="true">|</span> ${produit.prix}`;
-  }, 0.34);
-  tl.to([title, description], { autoAlpha: 1, y: 0, duration: 0.42 }, 0.54);
+  updateHeroContentFromActiveSlide();
 }
 
-function afficherProduitSuivant() {
-  const nextIndex = (heroCurrentIndex + 1) % heroProducts.length;
-  transitionProduit(nextIndex, "next");
+function startHeroAutoplay() {
+  heroSwiper?.autoplay?.start();
 }
 
-function startProductCarousel() {
-  window.clearInterval(carouselInterval);
-  carouselInterval = window.setInterval(afficherProduitSuivant, 4300);
-}
-
-function restartProductCarousel() {
-  startProductCarousel();
+function stopHeroAutoplay() {
+  heroSwiper?.autoplay?.stop();
 }
 
 function filterCatalogueByCategory(category = filtreActif) {
@@ -425,7 +424,7 @@ function showCatalog(event, filter = filtreActif, listView = catalogueEnListe) {
   renderProductGrid();
   const { hero } = getHeroElements();
   const catalog = document.querySelector(".product-catalog");
-  window.clearInterval(carouselInterval);
+  stopHeroAutoplay();
 
   if (document.body.classList.contains("catalog-open")) {
     initCatalogAnimation();
@@ -458,7 +457,7 @@ function closeProductDetailInstant() {
   detail.setAttribute("aria-hidden", "true");
   document.body.classList.remove("product-detail-open");
   if (document.body.classList.contains("catalog-open")) gsap.set(catalog, { autoAlpha: 1, scale: 1 });
-  window.clearInterval(carouselInterval);
+  stopHeroAutoplay();
   transitionEnCours = false;
 }
 
@@ -499,7 +498,7 @@ function showProductDetail(event, sourceImage = null) {
   if (document.body.classList.contains("about-page-open")) closeAboutPageInstant();
   if (transitionEnCours || document.body.classList.contains("product-detail-open")) return;
   transitionEnCours = true;
-  window.clearInterval(carouselInterval);
+  stopHeroAutoplay();
   const { hero, sidebar, image } = getHeroElements();
   const catalog = document.querySelector(".product-catalog");
   const detail = document.querySelector(".product-detail");
@@ -545,7 +544,7 @@ function goBackToHero() {
     document.body.classList.remove("product-detail-open", "catalog-open");
     proxy.remove();
     transitionEnCours = false;
-    startProductCarousel();
+    startHeroAutoplay();
   } })
     .to(revealItems, { autoAlpha: 0, y: 12, duration: 0.22, stagger: 0.03 }, 0)
     .to(proxy, { x: destinationRect.left, y: destinationRect.top, width: destinationRect.width, height: destinationRect.height, duration: 0.76, ease: "power3.inOut" }, 0.08)
@@ -574,7 +573,7 @@ function showHero(event) {
   catalog.style.display = "none";
   catalog.setAttribute("aria-hidden", "true");
   gsap.to([hero, sidebar], { autoAlpha: 1, scale: 1, duration: 0.3, ease: "power2.out" });
-  startProductCarousel();
+  startHeroAutoplay();
 }
 
 function showAboutPage(event) {
@@ -585,7 +584,7 @@ function showAboutPage(event) {
   const { hero, sidebar } = getHeroElements();
   const catalog = document.querySelector(".product-catalog");
   const about = document.querySelector(".about-page");
-  window.clearInterval(carouselInterval);
+  stopHeroAutoplay();
   document.body.classList.remove("catalog-open");
   catalog.style.display = "none";
   catalog.setAttribute("aria-hidden", "true");
@@ -606,7 +605,7 @@ function hideAboutPage() {
     about.setAttribute("aria-hidden", "true");
     document.body.classList.remove("about-page-open");
     gsap.to([hero, sidebar], { autoAlpha: 1, scale: 1, duration: 0.32, ease: "power2.out" });
-    startProductCarousel();
+    startHeroAutoplay();
   } });
 }
 
@@ -923,7 +922,7 @@ function applyLanguage(lang = currentLang) {
   renderProductGrid();
   updateCart();
   updateProductDetail();
-  appliquerProduit(heroProducts[heroCurrentIndex]);
+  updateHeroContentFromActiveSlide();
   updateWishlistButton();
 }
 
@@ -966,16 +965,6 @@ function toggleMobileMenu() {
 /** Tous les écouteurs sont initialisés de façon centralisée après le DOM. */
 function initEventListeners() {
   document.querySelector(".button-pill").addEventListener("click", showProductDetail);
-  document.querySelector(".hero__arrow--left").addEventListener("click", () => {
-    const previousIndex = (heroCurrentIndex - 1 + heroProducts.length) % heroProducts.length;
-    transitionProduit(previousIndex, "previous");
-    restartProductCarousel();
-  });
-  document.querySelector(".hero__arrow--right").addEventListener("click", () => {
-    const nextIndex = (heroCurrentIndex + 1) % heroProducts.length;
-    transitionProduit(nextIndex, "next");
-    restartProductCarousel();
-  });
   document.querySelector(".detail-back").addEventListener("click", goBackToHero);
   document.querySelectorAll("[data-page='about']").forEach((link) => link.addEventListener("click", (event) => {
     closeMobileMenu();
@@ -1007,7 +996,7 @@ function initEventListeners() {
       updateProductDetail();
       return;
     }
-    showProductDetail(null, document.querySelector(".product-image-main"));
+    showProductDetail(null, getHeroElements().image);
   });
   document.addEventListener("click", (event) => {
     const panel = document.querySelector(".header-search");
@@ -1070,12 +1059,12 @@ function init() {
   updateCart();
   updateWishlistButton();
   document.querySelector(".review-count").textContent = Math.floor(Math.random() * 41) + 10;
-  appliquerProduit(heroProducts[0]);
+  initHeroSwiper();
   initHeroAnimation();
   initAccordions();
   initEventListeners();
   closeMobileMenu();
-  startProductCarousel();
+  startHeroAutoplay();
 }
 
 document.addEventListener("DOMContentLoaded", init);
