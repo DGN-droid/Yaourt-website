@@ -37,7 +37,7 @@ const translations = {
       values: [["Qualité avant tout", "Des ingrédients soigneusement sélectionnés, une préparation artisanale, sans compromis sur le goût ni sur la fraîcheur."], ["Authenticité", "Des recettes transmises et perfectionnées avec le temps, respectueuses des traditions culinaires qui nous inspirent."], ["Proximité", "Une relation directe et à l'écoute de notre clientèle, du choix des produits jusqu'à la livraison."], ["Engagement", "Un service fiable et attentif, pensé pour s'adapter aux besoins de chacun, à chaque commande."]],
       servicesTitle: "Nos services de livraison",
       servicesText: "Nous mettons tout en œuvre pour que votre commande vous parvienne dans les meilleures conditions, quel que soit votre besoin.",
-      delivery: [["Livraison standard", "Livraison en 24 à 48h sur l'ensemble de notre zone de couverture. Idéale pour vos commandes du quotidien, sans contrainte particulière d'horaire."], ["Livraison express", "Besoin d'être livré rapidement ? Notre option express permet une livraison sous quelques heures selon votre zone et nos disponibilités du moment. Contactez-nous directement pour vérifier l'éligibilité de votre commande."], ["Livraisons spéciales & événements", "Pour vos anniversaires, réunions d'entreprise, cérémonies ou tout autre événement particulier, nous proposons un service de livraison sur-mesure : quantités adaptées, créneaux horaires spécifiques, et présentation soignée pour l'occasion. Ces livraisons sont soumises à certaines conditions — n'hésitez pas à nous consulter pour organiser votre commande dans les meilleures conditions."], ["Zones de livraison & conditions", "Nous livrons actuellement dans un rayon défini autour de notre point de préparation. Un montant minimum de commande peut s'appliquer selon la distance. Pour toute zone en dehors de notre périmètre habituel, contactez-nous : une solution peut généralement être trouvée selon la demande."]],
+      delivery: [["Livraison standard", "Toutes nos livraisons sont effectuées en moins de 24 heures sur l'ensemble de notre zone de couverture, pour que vos plats et yaourts arrivent aussi frais qu'au moment de leur préparation."], ["Livraison express", "Besoin d'être livré rapidement ? Notre option express permet une livraison sous quelques heures selon votre zone et nos disponibilités du moment. Contactez-nous directement pour vérifier l'éligibilité de votre commande."], ["Livraisons spéciales & événements", "Pour vos anniversaires, fêtes ou tout autre événement particulier, notre équipe peut également se déplacer directement sur le lieu de votre événement pour préparer les plats sur place. Cette prestation nécessite d'être prévenue au moins 24 heures à l'avance afin que nous puissions nous organiser au mieux et vous garantir un service à la hauteur de l'occasion."], ["Zones de livraison & conditions", "Nous livrons actuellement dans un rayon défini autour de notre point de préparation. Un montant minimum de commande peut s'appliquer selon la distance. Pour toute zone en dehors de notre périmètre habituel, contactez-nous : une solution peut généralement être trouvée selon la demande."]],
       ctaText: "Une question, une demande particulière ou une commande spéciale à organiser ?",
       ctaButton: "NOUS CONTACTER",
     },
@@ -51,8 +51,8 @@ const translations = {
       wishlistRemove: "Retirer de la wishlist",
       accordion: ["Détails", "Livraison et Retours", "Avis"],
       accordionContent: [
-        "Ingrédients : lait entier bio fermenté. Lait collecté en France. À conserver entre 0°C et 6°C.",
-        "Livraison réfrigérée sous 48 h. Les retours sont possibles pour tout produit non ouvert, selon nos conditions.",
+        "Détails personnalisés selon le produit.",
+        "Livraison en moins de 24h sur l'ensemble de notre zone de couverture. Les retours sont possibles pour tout produit non ouvert, selon nos conditions.",
         "Nos clients apprécient sa texture crémeuse, son goût franc et sa simplicité.",
       ],
       close: "Fermer le panier",
@@ -117,7 +117,7 @@ const translations = {
       values: [["Quality first", "Carefully selected ingredients and artisan preparation, with no compromise on flavour or freshness."], ["Authenticity", "Recipes passed down and refined over time, respectful of the culinary traditions that inspire us."], ["Closeness", "A direct, attentive relationship with our customers, from product selection through delivery."], ["Commitment", "Reliable, considerate service designed to adapt to everyone's needs, with every order."]],
       servicesTitle: "Our delivery services",
       servicesText: "We do everything possible to ensure your order reaches you in the best conditions, whatever your needs.",
-      delivery: [["Standard delivery", "Delivery within 24 to 48 hours throughout our coverage area. Ideal for everyday orders without a specific timing requirement."], ["Express delivery", "Need your order quickly? Our express option provides delivery within a few hours depending on your area and current availability. Contact us directly to check whether your order is eligible."], ["Special deliveries & events", "For birthdays, business meetings, ceremonies, or any other special event, we offer a tailored delivery service: adapted quantities, specific delivery slots, and presentation suited to the occasion. These deliveries are subject to certain conditions — please contact us so we can arrange your order in the best possible conditions."], ["Delivery areas & conditions", "We currently deliver within a defined radius around our preparation site. A minimum order amount may apply depending on distance. For areas outside our usual perimeter, contact us: a solution can generally be found depending on your request."]],
+      delivery: [["Standard delivery", "All our deliveries are completed in under 24 hours across our entire coverage area, so your dishes and yogurts arrive as fresh as when they were prepared."], ["Express delivery", "Need your order quickly? Our express option provides delivery within a few hours depending on your area and current availability. Contact us directly to check whether your order is eligible."], ["Special deliveries & events", "For birthdays, celebrations or any special event, our team can also come directly to your event location to prepare the dishes on site. This service requires at least 24 hours' notice so we can organize accordingly and deliver a service worthy of the occasion."], ["Delivery areas & conditions", "We currently deliver within a defined radius around our preparation site. A minimum order amount may apply depending on distance. For areas outside our usual perimeter, contact us: a solution can generally be found depending on your request."]],
       ctaText: "A question, a special request, or a custom order to arrange?",
       ctaButton: "CONTACT US",
     },
@@ -131,8 +131,8 @@ const translations = {
       wishlistRemove: "Remove from wishlist",
       accordion: ["Details", "Delivery & Returns", "Reviews"],
       accordionContent: [
-        "Ingredients: whole organic fermented milk. Milk collected in France. Keep between 0°C and 6°C.",
-        "Refrigerated delivery within 48 hours. Returns are possible for any unopened product, as per our conditions.",
+        "Product-specific details.",
+        "Delivery in under 24 hours across our entire coverage area. Returns are possible for any unopened product, as per our conditions.",
         "Our customers appreciate its creamy texture, its straightforward taste, and its simplicity.",
       ],
       close: "Close cart",
@@ -175,7 +175,6 @@ const productTextMap = {
   "CRÊPES MAISON": { fr: { nom: "CRÊPES MAISON", description: "Crêpes Fines Traditionnelles", longDescription: "Des crêpes maison à la pâte souple et parfumée, servies dans un esprit généreux et simple." }, en: { nom: "HOMEMADE CRÊPES", description: "Traditional Fine Pancakes", longDescription: "A homemade crêpe selection with a soft, fragrant batter and a warm handmade feel." } },
   "CRÊPES GOURMANDES": { fr: { nom: "CRÊPES GOURMANDES", description: "Crêpes Roulées", longDescription: "Des crêpes gourmandes roulées pour un service généreux et visuellement équilibré." }, en: { nom: "GOURMET CRÊPES", description: "Rolled Pancakes", longDescription: "Rich rolled pancakes made for a soft, indulgent and neatly presented service." } },
   "CRÊPES CHOCOLAT": { fr: { nom: "CRÊPES CHOCOLAT", description: "Crêpe Nappée de Chocolat", longDescription: "Des crêpes généreusement nappées de chocolat, douces et fondantes à chaque bouchée." }, en: { nom: "CHOCOLATE CRÊPES", description: "Chocolate-Coated Pancakes", longDescription: "Chocolate-covered crêpes, silky and indulgent from the first bite." } },
-  "CHOCOOO NATURE": { fr: { nom: "CHOCOOO NATURE", description: "Biscuits Pur Beurre", longDescription: "Des biscuits nature fondants et généreux en beurre." }, en: { nom: "CHOCOOO PLAIN", description: "Pure Butter Biscuits", longDescription: "Butter-rich plain cookies with a soft, indulgent texture." } },
   "BROCHETTES DE VIANDE": { fr: { nom: "BROCHETTES DE VIANDE", description: "Brochettes de Bœuf Grillées", longDescription: "Des brochettes de bœuf grillées, généreuses et parfumées pour un plat de caractère." }, en: { nom: "MEAT SKEWERS", description: "Grilled Beef Skewers", longDescription: "Grilled beef skewers with deep smoky aroma and a bold, satisfying finish." } },
   "BROCHETTES GRILLÉES": { fr: { nom: "BROCHETTES GRILLÉES", description: "Brochettes de Viande Grillée", longDescription: "Des brochettes grillées à l’assemblage simple, parfumées et bien dorées." }, en: { nom: "GRILLED SKEWERS", description: "Grilled Meat Skewers", longDescription: "A grilled skewer selection with a smoky finish and a hearty feel." } },
   "BANANA BROCHETTE": { fr: { nom: "BANANA BROCHETTE", description: "Brochette à la Banane", longDescription: "Une brochette à la banane, colorée et généreuse pour une dégustation savoureuse." }, en: { nom: "BANANA BROCHETTE", description: "Banana Skewer", longDescription: "A colorful banana skewer, generously prepared for a satisfying meal." } },
@@ -195,6 +194,68 @@ const productTextMap = {
   "SALADE COMPOSÉE 2": { fr: { nom: "SALADE COMPOSÉE 2", description: "Salade de Légumes Variés", longDescription: "Une salade composée aux légumes variés, vivante et pleine de fraîcheur." }, en: { nom: "COMPOSED SALAD 2", description: "Assorted Vegetable Salad", longDescription: "A colorful composed salad with assorted vegetables, fresh and pleasantly varied." } },
   "SISI SPAGHETTIS": { fr: { nom: "SISI SPAGHETTIS", description: "Spaghetti Maison", longDescription: "Des spaghettis maison à la sauce tomate, classiques, doux et rassasiants." }, en: { nom: "SISI SPAGHETTIS", description: "Homestyle Spaghetti", longDescription: "Classic homemade spaghetti with tomato sauce, comforting and satisfying." } },
 };
+
+Object.assign(productTextMap, {
+  "YAOURT NATURE": { fr: { nom: "YAOURT NATURE", description: "Lot de 3 Pots Artisanaux", longDescription: "Trois pots de yaourt nature au lait entier bio, brassés lentement pour une texture riche et une légère acidité, à partager ou à savourer sur plusieurs jours." }, en: { nom: "PLAIN YOGURT", description: "Set of 3 Artisan Pots", longDescription: "Three whole-milk organic plain yogurt pots, slowly churned for a rich texture and a gentle tang, perfect to share or enjoy over a few days." } },
+  "YAOURT + GRANOLA": { fr: { nom: "YAOURT + GRANOLA", description: "Pot Gourmand au Granola Croustillant", longDescription: "Un pot de yaourt onctueux garni de granola croustillant, pour une pause gourmande qui allie douceur crémeuse et croquant." }, en: { nom: "YOGURT + GRANOLA", description: "Creamy Pot with Crunchy Granola", longDescription: "A creamy yogurt pot topped with crunchy granola, combining smooth richness with a satisfying crunch." } },
+  "YAOURT GRAND FORMAT": { fr: { nom: "YAOURT GRAND FORMAT", description: "Format Familial Généreux", longDescription: "Notre yaourt en grand format, pensé pour les familles ou les grandes envies, avec la même texture crémeuse et le même goût authentique." }, en: { nom: "FAMILY-SIZE YOGURT", description: "Generous Family Format", longDescription: "Our yogurt in a large family format, made for sharing, with the same creamy texture and authentic taste." } },
+  "CRÊPES MAISON": { fr: { nom: "CRÊPES MAISON", description: "Crêpes Fines et Nature", longDescription: "Des crêpes fines préparées maison, à la pâte souple et légèrement dorée, idéales nature ou accompagnées de votre garniture préférée." }, en: { nom: "HOMEMADE CRÊPES", description: "Thin, Plain Crêpes", longDescription: "Thin homemade crêpes with a soft, lightly golden batter, delicious plain or topped with your favorite filling." } },
+  "CRÊPES GOURMANDES": { fr: { nom: "CRÊPES GOURMANDES", description: "Crêpes Roulées et Garnies", longDescription: "Des crêpes roulées et généreusement garnies, présentées avec soin pour un moment gourmand à partager." }, en: { nom: "GOURMET CRÊPES", description: "Rolled and Filled Crêpes", longDescription: "Rolled crêpes with a generous filling, neatly presented for a delightful shared treat." } },
+  "CRÊPES CHOCOLAT": { fr: { nom: "CRÊPES CHOCOLAT", description: "Crêpe Nappée de Chocolat Fondant", longDescription: "Une crêpe généreusement nappée de chocolat fondant, moelleuse et gourmande à chaque bouchée." }, en: { nom: "CHOCOLATE CRÊPE", description: "Melted Chocolate-Coated Crêpe", longDescription: "A crêpe generously coated in melted chocolate, soft and indulgent in every bite." } },
+  "CRÊPES CHOCOOO": { fr: { nom: "CRÊPES CHOCOOO", description: "Crêpe Fourrée Gourmande", longDescription: "Une crêpe fourrée à la garniture gourmande et généreuse, moelleuse à l'intérieur, parfaite pour une pause sucrée réconfortante." }, en: { nom: "CHOCOOO CRÊPE", description: "Filled Gourmet Crêpe", longDescription: "A crêpe filled with a rich, generous filling, soft on the inside, perfect for a comforting sweet break." } },
+  "BROCHETTES DE VIANDE": { fr: { nom: "BROCHETTES DE VIANDE", description: "Brochettes de Bœuf Grillées au Feu de Bois", longDescription: "Des brochettes de bœuf marinées puis grillées, au goût fumé et à la texture tendre, servies bien dorées." }, en: { nom: "MEAT SKEWERS", description: "Wood-Grilled Beef Skewers", longDescription: "Marinated beef skewers grilled over open flame, smoky in flavor and tender in texture." } },
+  "BROCHETTES GRILLÉES": { fr: { nom: "BROCHETTES GRILLÉES", description: "Assortiment de Viande Grillée", longDescription: "Un assortiment de morceaux de viande grillés à point, dorés à l'extérieur et juteux à l'intérieur." }, en: { nom: "GRILLED SKEWERS", description: "Grilled Meat Assortment", longDescription: "An assortment of perfectly grilled meat pieces, golden outside and juicy inside." } },
+  "BANANA BROCHETTE": { fr: { nom: "BANANA BROCHETTE", description: "Brochette de Banane Plantain Grillée", longDescription: "Une brochette de banane plantain grillée, légèrement caramélisée, pour un accompagnement sucré-salé qui change des classiques." }, en: { nom: "PLANTAIN SKEWER", description: "Grilled Plantain Skewer", longDescription: "A grilled plantain skewer with a light caramelized touch, a sweet-savory side that stands out from the classics." } },
+  "BROCHETTES VIANDE LÉGUMES": { fr: { nom: "BROCHETTES VIANDE LÉGUMES", description: "Brochettes Mixtes Viande et Légumes", longDescription: "Un assemblage de viande et de légumes grillés ensemble, coloré et équilibré, pour un plat complet en une bouchée." }, en: { nom: "MEAT & VEG SKEWERS", description: "Mixed Meat and Vegetable Skewers", longDescription: "A colorful mix of meat and vegetables grilled together, balanced and satisfying in every bite." } },
+  "GOMBO": { fr: { nom: "GOMBO", description: "Sauce Gombo Traditionnelle et Mijotée", longDescription: "Une sauce gombo mijotée selon la tradition, à la texture veloutée, servie généreusement pour accompagner votre féculent préféré." }, en: { nom: "GOMBO", description: "Traditional Simmered Gombo Sauce", longDescription: "A traditionally simmered gombo sauce with a velvety texture, generously served to pair with your favorite side." } },
+  "ESSOR GOMBO": { fr: { nom: "ESSOR GOMBO", description: "Gombo Prêt à Emporter", longDescription: "La même sauce gombo mijotée, conditionnée pour être emportée facilement sans compromis sur le goût ni la fraîcheur." }, en: { nom: "GOMBO TO GO", description: "Takeaway Gombo", longDescription: "The same simmered gombo sauce, packed for an easy takeaway without compromising on taste or freshness." } },
+  "PÂTES AUX SAUCISSES": { fr: { nom: "PÂTES AUX SAUCISSES", description: "Pâtes Sautées aux Saucisses Fumées", longDescription: "Des pâtes généreusement sautées avec des saucisses fumées, pour un plat rassasiant aux saveurs relevées." }, en: { nom: "SAUSAGE PASTA", description: "Sautéed Pasta with Smoked Sausage", longDescription: "Generously sautéed pasta with smoked sausage, a hearty dish with bold, satisfying flavor." } },
+  "PÂTES AUX LÉGUMES": { fr: { nom: "PÂTES AUX LÉGUMES", description: "Pâtes Sautées aux Légumes de Saison", longDescription: "Des pâtes sautées avec des légumes de saison, légères et colorées, pour une option fraîche et équilibrée." }, en: { nom: "VEGETABLE PASTA", description: "Sautéed Seasonal Vegetable Pasta", longDescription: "Sautéed pasta with seasonal vegetables, light and colorful for a fresh, balanced option." } },
+  "PENNE VIANDE SAUTÉE": { fr: { nom: "PENNE VIANDE SAUTÉE", description: "Penne à la Viande Sautée et Épicée", longDescription: "Des penne accompagnées de viande sautée légèrement épicée, pour un plat consistant aux saveurs marquées." }, en: { nom: "SAUTÉED MEAT PENNE", description: "Penne with Spiced Sautéed Meat", longDescription: "Penne paired with lightly spiced sautéed meat, a hearty dish with bold flavor." } },
+  "POISSON SAUCE TOMATE": { fr: { nom: "POISSON SAUCE TOMATE", description: "Poisson Mijoté à la Sauce Tomate", longDescription: "Un poisson mijoté longuement dans une sauce tomate parfumée, tendre et généreux en saveurs." }, en: { nom: "FISH IN TOMATO SAUCE", description: "Slow-Simmered Fish in Tomato Sauce", longDescription: "Fish slowly simmered in a fragrant tomato sauce, tender and rich in flavor." } },
+  "EGOUSSI SOUNNOUN": { fr: { nom: "EGOUSSI SOUNNOUN", description: "Sauce Egoussi Traditionnelle", longDescription: "Une sauce egoussi préparée selon la recette traditionnelle, onctueuse et parfumée, à accompagner du féculent de votre choix." }, en: { nom: "EGOUSSI SOUNNOUN", description: "Traditional Egoussi Sauce", longDescription: "A traditionally prepared egoussi sauce, smooth and fragrant, to enjoy with your favorite side." } },
+  "RIZ AVEC LÉGUMES": { fr: { nom: "RIZ AVEC LÉGUMES", description: "Riz Complet aux Légumes", longDescription: "Un riz complet cuisiné avec des légumes variés, léger et équilibré pour un repas sain au quotidien." }, en: { nom: "RICE WITH VEGETABLES", description: "Whole Rice with Vegetables", longDescription: "Whole rice cooked with a mix of vegetables, light and balanced for an everyday healthy meal." } },
+  "RIZ CURRY + AILERON / VIANDE DE BŒUF": { fr: { nom: "RIZ CURRY + AILERON / VIANDE DE BŒUF", description: "Riz au Curry avec Aileron ou Bœuf", longDescription: "Un riz parfumé au curry, servi avec au choix des ailerons de poulet ou de la viande de bœuf mijotée, pour un plat riche et généreux." }, en: { nom: "CURRY RICE + WING / BEEF", description: "Curry Rice with Chicken Wing or Beef", longDescription: "Curry-scented rice served with a choice of chicken wings or slow-cooked beef, for a rich, generous meal." } },
+  "SALADE COMPOSÉE": { fr: { nom: "SALADE COMPOSÉE", description: "Salade Fraîcheur aux Légumes Croquants", longDescription: "Une salade composée de légumes frais et croquants, légère et colorée, idéale pour un repas équilibré." }, en: { nom: "COMPOSED SALAD", description: "Fresh Salad with Crunchy Vegetables", longDescription: "A composed salad of fresh, crunchy vegetables, light and colorful, ideal for a balanced meal." } },
+  "MANTINDJAN": { fr: { nom: "MANTINDJAN", description: "Spécialité Maison Traditionnelle", longDescription: "Une spécialité traditionnelle préparée maison, aux saveurs authentiques transmises avec soin." }, en: { nom: "MANTINDJAN", description: "Traditional Homemade Specialty", longDescription: "A traditional homemade specialty with authentic flavors, carefully prepared." } },
+  "SALADE DE PÂTES": { fr: { nom: "SALADE DE PÂTES", description: "Salade de Pâtes Fraîche et Légère", longDescription: "Une salade de pâtes fraîche, légère et généreuse, parfaite pour un déjeuner simple et rassasiant." }, en: { nom: "PASTA SALAD", description: "Fresh, Light Pasta Salad", longDescription: "A fresh, light pasta salad, generous enough for a simple and satisfying lunch." } },
+  "SALADE COMPOSÉE 2": { fr: { nom: "SALADE COMPOSÉE 2", description: "Salade de Légumes Variés et Colorés", longDescription: "Une seconde variante de salade composée, aux légumes variés et colorés, pour renouveler le plaisir de la fraîcheur." }, en: { nom: "COMPOSED SALAD 2", description: "Assorted Colorful Vegetable Salad", longDescription: "A second composed salad variation with assorted, colorful vegetables for a refreshing change." } },
+  "SISI SPAGHETTIS": { fr: { nom: "SISI SPAGHETTIS", description: "Spaghetti Sauce Tomate Maison", longDescription: "Un spaghetti classique à la sauce tomate maison, simple, réconfortant et généreusement servi." }, en: { nom: "SISI SPAGHETTI", description: "Homestyle Tomato Sauce Spaghetti", longDescription: "A classic spaghetti with homemade tomato sauce, simple, comforting and generously served." } },
+});
+
+const localizedProductDetails = {
+  "YAOURT NATURE": { fr: "Ingrédients : lait entier bio, ferments lactiques. Lait collecté auprès de fermes locales. À conserver entre 0°C et 6°C, à consommer sous 5 jours après ouverture.", en: "Ingredients: organic whole milk, live cultures. Milk sourced from local farms. Keep between 0°C and 6°C and consume within 5 days after opening." },
+  "YAOURT + GRANOLA": { fr: "Ingrédients : yaourt nature bio, granola (avoine, miel, fruits secs). À conserver entre 0°C et 6°C, à consommer rapidement après ouverture pour un granola croustillant.", en: "Ingredients: organic plain yogurt, granola (oats, honey, dried fruit). Keep between 0°C and 6°C and enjoy soon after opening for maximum crunch." },
+  "YAOURT GRAND FORMAT": { fr: "Ingrédients : lait entier bio, ferments lactiques. Format familial. À conserver entre 0°C et 6°C, à consommer sous 5 jours après ouverture.", en: "Ingredients: organic whole milk, live cultures. Family-size format. Keep between 0°C and 6°C and consume within 5 days after opening." },
+  "CRÊPES MAISON": { fr: "Ingrédients : farine de blé, œufs frais, lait, beurre, une pincée de sel. Préparées le jour même. À conserver au frais, à consommer sous 48h.", en: "Ingredients: wheat flour, fresh eggs, milk, butter and a pinch of salt. Made the same day. Keep chilled and consume within 48 hours." },
+  "CRÊPES GOURMANDES": { fr: "Ingrédients : farine de blé, œufs, lait, garniture gourmande maison. Préparées le jour même. À conserver au frais et à réchauffer légèrement avant dégustation.", en: "Ingredients: wheat flour, eggs, milk and a homemade gourmet filling. Made the same day. Keep chilled and warm gently before serving." },
+  "CRÊPES CHOCOLAT": { fr: "Ingrédients : farine de blé, œufs, lait, chocolat fondant. Préparées le jour même. À conserver au frais, meilleure dégustation à température ambiante.", en: "Ingredients: wheat flour, eggs, milk and melted chocolate. Made the same day. Keep chilled; best enjoyed at room temperature." },
+  "CRÊPES CHOCOOO": { fr: "Ingrédients : farine de blé, œufs, lait, garniture chocolatée. Préparées le jour même. À conserver au frais, à consommer sous 48h.", en: "Ingredients: wheat flour, eggs, milk and a chocolate filling. Made the same day. Keep chilled and consume within 48 hours." },
+  "BROCHETTES DE VIANDE": { fr: "Ingrédients : bœuf mariné, épices, oignons. Cuisson grillée au feu de bois. À consommer chaud, idéalement le jour de la livraison.", en: "Ingredients: marinated beef, spices and onions. Wood-fire grilled. Enjoy hot, ideally on the day of delivery." },
+  "BROCHETTES GRILLÉES": { fr: "Ingrédients : viande assortie, marinade maison, épices grillées. Cuisson au feu de bois. À consommer chaud, idéalement le jour de la livraison.", en: "Ingredients: assorted meat, homemade marinade and grilled spices. Wood-fire cooked. Enjoy hot, ideally on the day of delivery." },
+  "BANANA BROCHETTE": { fr: "Ingrédients : banane plantain, une touche de sucre de canne, cuisson grillée. À consommer chaud, en accompagnement ou seul.", en: "Ingredients: plantain, a touch of cane sugar, grilled cooking. Enjoy hot as a side dish or on its own." },
+  "BROCHETTES VIANDE LÉGUMES": { fr: "Ingrédients : viande marinée, poivrons, oignons, courgettes. Cuisson grillée au feu de bois. À consommer chaud, idéalement le jour de la livraison.", en: "Ingredients: marinated meat, peppers, onions and courgettes. Wood-fire grilled. Enjoy hot, ideally on the day of delivery." },
+  "GOMBO": { fr: "Ingrédients : gombo frais, viande ou poisson au choix, épices traditionnelles, huile de palme. Mijoté longuement. À consommer chaud avec le féculent de votre choix.", en: "Ingredients: fresh okra, meat or fish of your choice, traditional spices and palm oil. Slowly simmered. Enjoy hot with your preferred starch." },
+  "ESSOR GOMBO": { fr: "Ingrédients : gombo frais, viande ou poisson au choix, épices traditionnelles. Conditionné pour l'emport. À réchauffer avant dégustation.", en: "Ingredients: fresh okra, meat or fish of your choice and traditional spices. Packed for takeaway. Reheat before serving." },
+  "PÂTES AUX SAUCISSES": { fr: "Ingrédients : pâtes, saucisses fumées, sauce tomate maison, épices. Préparé le jour même. À consommer chaud.", en: "Ingredients: pasta, smoked sausages, homemade tomato sauce and spices. Made the same day. Enjoy hot." },
+  "PÂTES AUX LÉGUMES": { fr: "Ingrédients : pâtes, légumes de saison sautés, huile d'olive, épices douces. Préparé le jour même. À consommer chaud ou froid.", en: "Ingredients: pasta, sautéed seasonal vegetables, olive oil and mild spices. Made the same day. Enjoy hot or cold." },
+  "PENNE VIANDE SAUTÉE": { fr: "Ingrédients : penne, viande sautée, épices, sauce maison. Préparé le jour même. À consommer chaud.", en: "Ingredients: penne, sautéed meat, spices and homemade sauce. Made the same day. Enjoy hot." },
+  "POISSON SAUCE TOMATE": { fr: "Ingrédients : poisson frais, sauce tomate maison, épices, oignons, poivrons. Mijoté longuement. À consommer chaud avec le féculent de votre choix.", en: "Ingredients: fresh fish, homemade tomato sauce, spices, onions and peppers. Slowly simmered. Enjoy hot with your preferred starch." },
+  "EGOUSSI SOUNNOUN": { fr: "Ingrédients : graines d'egoussi, viande ou poisson au choix, épices traditionnelles. Mijoté selon la recette traditionnelle. À consommer chaud.", en: "Ingredients: egoussi seeds, meat or fish of your choice and traditional spices. Simmered following a traditional recipe. Enjoy hot." },
+  "RIZ AVEC LÉGUMES": { fr: "Ingrédients : riz, légumes de saison, épices douces, huile végétale. Préparé le jour même. À consommer chaud.", en: "Ingredients: rice, seasonal vegetables, mild spices and vegetable oil. Made the same day. Enjoy hot." },
+  "RIZ CURRY + AILERON / VIANDE DE BŒUF": { fr: "Ingrédients : riz, curry, ailerons de poulet ou bœuf mijoté au choix, épices. Préparé le jour même. À consommer chaud.", en: "Ingredients: rice, curry, chicken wings or slow-cooked beef of your choice, and spices. Made the same day. Enjoy hot." },
+  "SALADE COMPOSÉE": { fr: "Ingrédients : légumes frais de saison, protéines au choix, vinaigrette maison. Préparée le jour même. À consommer frais, idéalement dans les 24h.", en: "Ingredients: fresh seasonal vegetables, protein of your choice and homemade dressing. Made the same day. Enjoy chilled, ideally within 24 hours." },
+  "MANTINDJAN": { fr: "Ingrédients : recette traditionnelle maison, épices locales. Préparé selon la recette transmise avec soin. À consommer chaud.", en: "Ingredients: a traditional homemade recipe and local spices. Carefully prepared from a passed-down recipe. Enjoy hot." },
+  "SALADE DE PÂTES": { fr: "Ingrédients : pâtes, légumes frais, vinaigrette légère. Préparée le jour même. À consommer frais, idéalement dans les 24h.", en: "Ingredients: pasta, fresh vegetables and light dressing. Made the same day. Enjoy chilled, ideally within 24 hours." },
+  "SALADE COMPOSÉE 2": { fr: "Ingrédients : légumes variés et colorés, vinaigrette maison. Préparée le jour même. À consommer frais, idéalement dans les 24h.", en: "Ingredients: assorted colorful vegetables and homemade dressing. Made the same day. Enjoy chilled, ideally within 24 hours." },
+  "SISI SPAGHETTIS": { fr: "Ingrédients : spaghetti, sauce tomate maison, épices, herbes fraîches. Préparé le jour même. À consommer chaud.", en: "Ingredients: spaghetti, homemade tomato sauce, spices and fresh herbs. Made the same day. Enjoy hot." },
+};
+
+Object.entries(localizedProductDetails).forEach(([nom, details]) => {
+  if (!productTextMap[nom]) return;
+  productTextMap[nom].fr.details = details.fr;
+  productTextMap[nom].en.details = details.en;
+});
 
 function formatCfaPrice(amount) {
   return `${new Intl.NumberFormat("fr-FR").format(Math.round(amount / FCFA_STEP) * FCFA_STEP)} FCFA`;
@@ -217,6 +278,12 @@ function getLocalizedLongDescription(product, lang = currentLang) {
   return product.longDescription || product.description || "";
 }
 
+function getLocalizedDetails(product, lang = currentLang) {
+  const data = productTextMap[product.nom];
+  if (data && data[lang] && data[lang].details) return data[lang].details;
+  return lang === "en" ? "Details coming soon." : "Détails à venir.";
+}
+
 function getLocalizedPrice(product) {
   return product.prix;
 }
@@ -231,7 +298,7 @@ const dessert = [
   { nom: "CRÊPES MAISON", description: "Crêpes Fines Traditionnelles", prix: "1 850 FCFA", image: "asset/images/dessert/crepes.jpeg", categorie: "dessert" },
   { nom: "CRÊPES GOURMANDES", description: "Crêpes Roulées", prix: "2 500 FCFA", image: "asset/images/dessert/crepe2.jpeg", categorie: "dessert" },
   { nom: "CRÊPES CHOCOLAT", description: "Crêpe Nappée de Chocolat", prix: "2 000 FCFA", image: "asset/images/dessert/crepe_chocolate.jpeg", categorie: "dessert" },
-  { nom: "CHOCOOO NATURE", description: "Biscuits Pur Beurre", prix: "1 950 FCFA", image: "asset/images/dessert/sables_chocolat_vanille.jpeg", categorie: "dessert" }
+  { nom: "CRÊPES CHOCOOO", description: "Crêpe Fourrée Gourmande", prix: "1 950 FCFA", image: "asset/images/dessert/sables_chocolat_vanille.jpeg", categorie: "dessert" }
 ];
 
 const plats = [
@@ -254,6 +321,11 @@ const plats = [
   { nom: "SALADE COMPOSÉE 2", description: "Salade de Légumes Variés", prix: "4 250 FCFA", image: "asset/images/plats/salade_multicolore.jpeg", categorie: "plats" },
   { nom: "SISI SPAGHETTIS", description: "Spaghetti Maison", prix: "3 700 FCFA", image: "asset/images/plats/spaghetti_sauce_tomate.jpeg", categorie: "plats" }
 ];
+
+// Les descriptions catalogue restent synchronisées avec les contenus localisés.
+[...yaourt, ...dessert, ...plats].forEach((produit) => {
+  produit.description = productTextMap[produit.nom]?.fr.description || produit.description;
+});
 
 const catalogue = [...yaourt, ...dessert, ...plats].map((item, index) => ({
   ...item,
@@ -331,12 +403,12 @@ function updateHeroContentFromActiveSlide() {
   produitActuel = produit.productIndex;
   const { title, description } = getHeroElements();
   gsap.timeline()
-    .to([title, description], { autoAlpha: 0, y: -10, duration: 0.2 })
+    .to([title, description], { autoAlpha: 0, y: -10, duration: 0.35 })
     .add(() => {
       title.textContent = getLocalizedText(produit, "nom");
       description.innerHTML = `${getLocalizedText(produit, "description")} <span aria-hidden="true">|</span> ${produit.prix}`;
     })
-    .to([title, description], { autoAlpha: 1, y: 0, duration: 0.35 });
+    .to([title, description], { autoAlpha: 1, y: 0, duration: 0.5 });
 }
 
 function initHeroSwiper() {
@@ -348,9 +420,9 @@ function initHeroSwiper() {
     centeredSlides: true,
     slidesPerView: "auto",
     loop: true,
-    speed: 900,
+    speed: 1400,
     coverflowEffect: { rotate: 0, stretch: 0, depth: 220, modifier: 1.4, slideShadows: false },
-    autoplay: { delay: 3800, disableOnInteraction: false, pauseOnMouseEnter: false },
+    autoplay: { delay: 5500, disableOnInteraction: false, pauseOnMouseEnter: false },
     navigation: { nextEl: ".hero__arrow--right", prevEl: ".hero__arrow--left" },
     on: {
       progress: applyHeroSlideBlur,
@@ -478,6 +550,7 @@ function updateProductDetail(variant = 0) {
   document.querySelector("#detail-product-title").textContent = getLocalizedText(produit, "nom");
   document.querySelector(".detail-product-heading p").textContent = getLocalizedText(produit, "description");
   document.querySelector(".detail-description").textContent = getLocalizedLongDescription(produit);
+  document.querySelector("#accordion-details p").textContent = getLocalizedDetails(produit);
   updateWishlistButton();
 }
 
@@ -905,8 +978,9 @@ function applyLanguage(lang = currentLang) {
     if (label) label.textContent = t.detail.accordion[index];
   });
   document.querySelectorAll(".product-detail .accordion-panel p").forEach((panel, index) => {
-    panel.textContent = t.detail.accordionContent[index];
+    if (index > 0) panel.textContent = t.detail.accordionContent[index];
   });
+  document.querySelector("#accordion-details p").textContent = getLocalizedDetails(catalogue[produitActuel]);
   document.querySelector(".cart-empty").textContent = t.detail.cartEmpty;
   document.querySelector(".drawer-header h2").textContent = t.detail.cartTitle;
   document.querySelector("[data-checkout]").textContent = t.detail.checkout;
