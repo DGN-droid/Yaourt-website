@@ -62,6 +62,9 @@ const translations = {
       checkout: "Passer commande",
       checkoutTitle: "Veuillez nous écrire pour passer votre commande",
       checkoutSubtitle: "Notre équipe vous répond rapidement pour confirmer votre commande.",
+      messageLabel: "Votre message de commande :",
+      copyMessage: "Copier le message",
+      copiedMessage: "Message copié — collez-le sur Instagram",
       priceTotal: "Total",
       formatUpdated: "Format mis à jour",
       productCountLabel: (count) => `${count} produit${count > 1 ? "s" : ""} dans le panier`,
@@ -142,6 +145,9 @@ const translations = {
       checkout: "Checkout",
       checkoutTitle: "Please message us to place your order",
       checkoutSubtitle: "Our team will reply quickly to confirm your order.",
+      messageLabel: "Your order message:",
+      copyMessage: "Copy message",
+      copiedMessage: "Message copied — paste it on Instagram",
       priceTotal: "Total",
       formatUpdated: "Format updated",
       productCountLabel: (count) => `${count} product${count > 1 ? "s" : ""} in the cart`,
@@ -419,6 +425,7 @@ function initHeroSwiper() {
     grabCursor: true,
     centeredSlides: true,
     slidesPerView: "auto",
+    slideToClickedSlide: true,
     loop: true,
     speed: 1400,
     coverflowEffect: { rotate: 0, stretch: 0, depth: 220, modifier: 1.4, slideShadows: false },
@@ -429,6 +436,17 @@ function initHeroSwiper() {
       setTransition: applyHeroSlideBlurTransition,
       slideChangeTransitionStart: updateHeroContentFromActiveSlide,
     },
+  });
+  document.querySelector(".hero-swiper__wrapper").addEventListener("click", (event) => {
+    if (!heroSwiper?.allowClick) return;
+    const slide = event.target.closest(".hero-swiper__slide");
+    if (!slide || !slide.classList.contains("swiper-slide-active")) return;
+    const heroProduct = heroProducts[Number(slide.dataset.productIndex)];
+    if (!heroProduct) return;
+    produitActuel = catalogue.findIndex((produit) => produit.nom === heroProduct.nom);
+    if (produitActuel === -1) return;
+    heroSwiper.autoplay.stop();
+    showProductDetail(event, slide.querySelector(".product-image-main"));
   });
   updateHeroContentFromActiveSlide();
 }
@@ -821,8 +839,38 @@ function updateWishlistButton() {
   button.setAttribute("aria-label", selected ? translations[currentLang].detail.wishlistRemove : translations[currentLang].detail.wishlistAdd);
 }
 
+function buildOrderMessage() {
+  if (panier.length === 0) return "Bonjour Seton's Delight, je souhaite passer une commande.";
+  const items = panier.map((item) => `${item.quantite}x ${getLocalizedText(item.produit, "nom")}`).join(", ");
+  const total = panier.reduce((sum, item) => sum + (parseCfaPrice(item.produit.prix) * item.quantite), 0);
+  return `Bonjour Seton's Delight, je passe commande de : ${items}. Total estimé : ${formatCfaPrice(total)}. Merci de me confirmer la disponibilité.`;
+}
+
+function renderCheckoutMessagePreview(message) {
+  let messagePreview = document.querySelector(".checkout-contact__message-preview");
+  if (!messagePreview) {
+    messagePreview = document.createElement("div");
+    messagePreview.className = "checkout-contact__message-preview";
+    document.querySelector(".checkout-contact__options").insertAdjacentElement("afterend", messagePreview);
+  }
+  const t = translations[currentLang].detail;
+  messagePreview.innerHTML = `
+    <p class="checkout-contact__message-label">${t.messageLabel}</p>
+    <p class="checkout-contact__message-text"></p>
+    <button class="checkout-contact__copy-btn" type="button" data-copy-message>${t.copyMessage}</button>
+  `;
+  messagePreview.querySelector(".checkout-contact__message-text").textContent = message;
+  messagePreview.querySelector("[data-copy-message]").addEventListener("click", () => {
+    navigator.clipboard.writeText(message).then(() => showToast(t.copiedMessage));
+  });
+}
+
 function openCheckoutContact() {
   const overlay = document.querySelector(".checkout-contact");
+  const message = buildOrderMessage();
+  const whatsappLink = document.querySelector(".checkout-contact__card--whatsapp");
+  whatsappLink.href = `https://wa.me/2290169550446?text=${encodeURIComponent(message)}`;
+  renderCheckoutMessagePreview(message);
   closeCart();
   overlay.style.display = "flex";
   overlay.setAttribute("aria-hidden", "false");
@@ -986,6 +1034,10 @@ function applyLanguage(lang = currentLang) {
   document.querySelector("[data-checkout]").textContent = t.detail.checkout;
   document.querySelector(".checkout-contact__title").textContent = t.detail.checkoutTitle;
   document.querySelector(".checkout-contact__subtitle").textContent = t.detail.checkoutSubtitle;
+  const messagePreview = document.querySelector(".checkout-contact__message-preview");
+  if (messagePreview) {
+    renderCheckoutMessagePreview(messagePreview.querySelector(".checkout-contact__message-text").textContent);
+  }
   document.querySelector("[data-cart-close]").setAttribute("aria-label", t.detail.close);
   document.querySelector("[data-cart-toggle]").setAttribute("aria-label", t.nav.cart);
   applyAboutTranslations(document.querySelector(".about-page"));

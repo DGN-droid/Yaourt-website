@@ -401,6 +401,10 @@ button {
   background-image: none;
 }
 
+.hero-swiper__slide.swiper-slide-active .product-image-main {
+  cursor: pointer;
+}
+
 .swiper-button-next,
 .swiper-button-prev {
   display: none !important;
@@ -1318,6 +1322,48 @@ body:not(.theme-dark) .theme-dropdown__item:hover {
   margin-top: 2px;
   color: var(--text-secondary);
   font-size: 13px;
+}
+
+.checkout-contact__message-preview {
+  margin-top: 28px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 16px;
+  background: var(--bg-secondary);
+  text-align: left;
+}
+
+.checkout-contact__message-label {
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.checkout-contact__message-text {
+  margin-bottom: 14px;
+  color: var(--text-color);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.checkout-contact__copy-btn {
+  padding: 10px 20px;
+  border: 1px solid var(--text-color);
+  border-radius: 50px;
+  color: var(--text-color);
+  background: transparent;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.checkout-contact__copy-btn:hover {
+  color: var(--bg-color);
+  background: var(--text-color);
 }
 
 /* ---------- À propos ---------- */
