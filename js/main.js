@@ -199,6 +199,8 @@ const productTextMap = {
   "SALADE DE PÂTES": { fr: { nom: "SALADE DE PÂTES", description: "Salade de Pâtes Fraîche", longDescription: "Une salade de pâtes fraîche et généreuse, parfaite pour un repas léger et rassasiant." }, en: { nom: "PASTA SALAD", description: "Fresh Pasta Salad", longDescription: "A fresh and generous pasta salad built for a light, satisfying and easy meal." } },
   "SALADE COMPOSÉE 2": { fr: { nom: "SALADE COMPOSÉE 2", description: "Salade de Légumes Variés", longDescription: "Une salade composée aux légumes variés, vivante et pleine de fraîcheur." }, en: { nom: "COMPOSED SALAD 2", description: "Assorted Vegetable Salad", longDescription: "A colorful composed salad with assorted vegetables, fresh and pleasantly varied." } },
   "SISI SPAGHETTIS": { fr: { nom: "SISI SPAGHETTIS", description: "Spaghetti Maison", longDescription: "Des spaghettis maison à la sauce tomate, classiques, doux et rassasiants." }, en: { nom: "SISI SPAGHETTIS", description: "Homestyle Spaghetti", longDescription: "Classic homemade spaghetti with tomato sauce, comforting and satisfying." } },
+  "BISSAP À LA MENTHE": { fr: { nom: "BISSAP À LA MENTHE", description: "Boisson Glacée Rafraîchissante", longDescription: "Une infusion de bissap glacée, relevée d'une touche de menthe fraîche, parfaite pour se rafraîchir à tout moment de la journée.", details: "Ingrédients : fleurs d'hibiscus (bissap), menthe fraîche, sucre, eau. Servi glacé. À consommer frais, idéalement le jour même." }, en: { nom: "MINT BISSAP", description: "Refreshing Iced Drink", longDescription: "An iced hibiscus infusion lifted with fresh mint, perfect to cool down any time of day.", details: "Ingredients: hibiscus flowers, fresh mint, sugar, water. Served chilled. Best enjoyed fresh, ideally the same day." } },
+  "BISSAP À L'ANANAS": { fr: { nom: "BISSAP À L'ANANAS", description: "Boisson Glacée Fruitée", longDescription: "Une infusion de bissap glacée aux morceaux d'ananas, fruitée et désaltérante, pour une pause fraîcheur pleine de saveurs.", details: "Ingrédients : fleurs d'hibiscus (bissap), ananas, sucre, eau. Servi glacé. À consommer frais, idéalement le jour même." }, en: { nom: "PINEAPPLE BISSAP", description: "Fruity Iced Drink", longDescription: "An iced hibiscus infusion with pineapple pieces, fruity and thirst-quenching for a flavorful refreshing break.", details: "Ingredients: hibiscus flowers, pineapple, sugar, water. Served chilled. Best enjoyed fresh, ideally the same day." } },
 };
 
 Object.assign(productTextMap, {
@@ -297,7 +299,9 @@ function getLocalizedPrice(product) {
 const yaourt = [
   { nom: "YAOURT NATURE", description: "Pot Artisanal Bio", prix: "2 250 FCFA (lot de 3 pots)", image: "asset/images/yaourt/pots_de_yaourt.jpeg", categorie: "yaourt" },
   { nom: "YAOURT + GRANOLA", description: "Pot Gourmand", prix: "1 800 FCFA (le pot)", image: "asset/images/yaourt/yaourt_nature.jpeg", categorie: "yaourt" },
-  { nom: "YAOURT GRAND FORMAT", description: "Format Généreux", prix: "À partir de 3 500 FCFA", image: "asset/images/yaourt/yaourt_a_boire.jpeg", categorie: "yaourt" }
+  { nom: "YAOURT GRAND FORMAT", description: "Format Généreux", prix: "À partir de 3 500 FCFA", image: "asset/images/yaourt/yaourt_a_boire.jpeg", categorie: "yaourt" },
+  { nom: "BISSAP À LA MENTHE", description: "Boisson Glacée Rafraîchissante", prix: "800 FCFA", image: "asset/images/yaourt/Bissap-a-la-menthe.jpeg", categorie: "yaourt" },
+  { nom: "BISSAP À L'ANANAS", description: "Boisson Glacée Fruitée", prix: "800 FCFA", image: "asset/images/yaourt/Bissap-a-l-ananas.jpeg", categorie: "yaourt" }
 ];
 
 const dessert = [
@@ -349,9 +353,6 @@ let filtreActif = "yaourt";
 let rechercheActive = "";
 let catalogueEnListe = false;
 let iceDrinksFilterActive = false;
-
-// TODO: confirmer les produits exacts à afficher dans la sous-catégorie ICE DRINKS.
-const ICE_DRINKS_PRODUCT_NAMES = ["YAOURT GRAND FORMAT"];
 
 const getHeroElements = () => ({
   hero: document.querySelector(".hero"),
@@ -470,21 +471,22 @@ function filterCatalogueByCategory(category = filtreActif) {
 
 function getFilteredProducts() {
   const normalizedSearch = rechercheActive.trim().toLocaleLowerCase("fr");
-  let products = filterCatalogueByCategory(filtreActif);
+  let base = filterCatalogueByCategory(filtreActif);
   if (filtreActif === "yaourt" && iceDrinksFilterActive) {
-    products = products.filter((item) => ICE_DRINKS_PRODUCT_NAMES.includes(item.nom));
+    base = base.filter((item) => item.nom === "BISSAP À LA MENTHE" || item.nom === "BISSAP À L'ANANAS");
   }
-  return products.filter((produit) => {
+  return base.filter((produit) => {
     const searchable = `${produit.nom} ${produit.description} ${produit.categorie}`.toLocaleLowerCase("fr");
     return !normalizedSearch || searchable.includes(normalizedSearch);
   });
 }
 
 function updateSubcategoryVisibility() {
-  const subcategoryBar = document.querySelector(".catalog-subcategories");
+  const subcatBar = document.querySelector(".catalog-subcategories");
   const badge = document.querySelector('[data-subcategory="ice-drinks"]');
   const isYaourt = filtreActif === "yaourt";
-  subcategoryBar.hidden = !isYaourt;
+  subcatBar.hidden = !isYaourt;
+  subcatBar.style.display = isYaourt ? "flex" : "none";
   if (!isYaourt) {
     iceDrinksFilterActive = false;
     badge.classList.remove("is-active");
@@ -532,6 +534,7 @@ function showCatalog(event, filter = filtreActif, listView = catalogueEnListe) {
   catalogueEnListe = listView;
   updateCategoryActiveState(filter);
   updateViewToggles();
+  updateSubcategoryVisibility();
   renderProductGrid();
   const { hero } = getHeroElements();
   const catalog = document.querySelector(".product-catalog");
