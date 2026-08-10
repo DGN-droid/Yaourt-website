@@ -809,6 +809,56 @@ body.product-detail-open {
   position: fixed;
 }
 
+.catalog-subcategories {
+  display: flex;
+  justify-content: center;
+  margin: 0 0 32px;
+}
+
+.subcategory-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.subcategory-badge__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+  color: var(--text-color);
+  background: var(--bg-color);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, color 0.25s ease;
+}
+
+.subcategory-badge:hover .subcategory-badge__icon {
+  transform: scale(1.06);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.16);
+}
+
+.subcategory-badge.is-active .subcategory-badge__icon {
+  border-color: var(--btn-primary-bg);
+  color: var(--btn-primary-text);
+  background: var(--btn-primary-bg);
+}
+
+.subcategory-badge__label {
+  color: var(--text-color);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.catalog-subcategories + .catalog-grid {
+  margin-top: 0;
+}
+
 .catalog-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

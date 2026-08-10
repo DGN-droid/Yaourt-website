@@ -348,6 +348,10 @@ let detailSourceElement;
 let filtreActif = "yaourt";
 let rechercheActive = "";
 let catalogueEnListe = false;
+let iceDrinksFilterActive = false;
+
+// TODO: confirmer les produits exacts à afficher dans la sous-catégorie ICE DRINKS.
+const ICE_DRINKS_PRODUCT_NAMES = ["YAOURT GRAND FORMAT"];
 
 const getHeroElements = () => ({
   hero: document.querySelector(".hero"),
@@ -466,15 +470,32 @@ function filterCatalogueByCategory(category = filtreActif) {
 
 function getFilteredProducts() {
   const normalizedSearch = rechercheActive.trim().toLocaleLowerCase("fr");
-  return filterCatalogueByCategory(filtreActif).filter((produit) => {
+  let products = filterCatalogueByCategory(filtreActif);
+  if (filtreActif === "yaourt" && iceDrinksFilterActive) {
+    products = products.filter((item) => ICE_DRINKS_PRODUCT_NAMES.includes(item.nom));
+  }
+  return products.filter((produit) => {
     const searchable = `${produit.nom} ${produit.description} ${produit.categorie}`.toLocaleLowerCase("fr");
     return !normalizedSearch || searchable.includes(normalizedSearch);
   });
 }
 
+function updateSubcategoryVisibility() {
+  const subcategoryBar = document.querySelector(".catalog-subcategories");
+  const badge = document.querySelector('[data-subcategory="ice-drinks"]');
+  const isYaourt = filtreActif === "yaourt";
+  subcategoryBar.hidden = !isYaourt;
+  if (!isYaourt) {
+    iceDrinksFilterActive = false;
+    badge.classList.remove("is-active");
+    badge.setAttribute("aria-pressed", "false");
+  }
+}
+
 /** Construit la grille ou la liste depuis le filtre actif. */
 function renderProductGrid() {
   const grid = document.querySelector(".catalog-grid");
+  updateSubcategoryVisibility();
   const productsToRender = getFilteredProducts();
   grid.classList.toggle("is-list", catalogueEnListe);
   grid.innerHTML = productsToRender.length ? productsToRender.map((produit) => `
@@ -1110,6 +1131,14 @@ function initEventListeners() {
     const filter = toggle.closest(".hero") ? "all" : filtreActif;
     showCatalog(event, filter, toggle.dataset.catalogView === "list");
   }));
+  document.querySelector('[data-subcategory="ice-drinks"]').addEventListener("click", () => {
+    iceDrinksFilterActive = !iceDrinksFilterActive;
+    const badge = document.querySelector('[data-subcategory="ice-drinks"]');
+    badge.classList.toggle("is-active", iceDrinksFilterActive);
+    badge.setAttribute("aria-pressed", String(iceDrinksFilterActive));
+    renderProductGrid();
+    initCatalogAnimation();
+  });
   document.querySelector("[data-search-toggle]").addEventListener("click", toggleSearch);
   document.querySelector("[data-search-close]").addEventListener("click", closeSearch);
   document.querySelector("[data-header-search-input]").addEventListener("input", (event) => renderHeaderSearchResults(event.target.value));
