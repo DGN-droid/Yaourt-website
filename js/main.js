@@ -5,8 +5,66 @@ const FCFA_STEP = 50;
 let currentLang = "fr";
 let currentThemePreference = null;
 
+const STORAGE_KEY = "setonsDelightPrefs";
+
+function getStoredPrefs() {
+  try {
+    const prefs = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    return prefs && typeof prefs === "object" && !Array.isArray(prefs) ? prefs : null;
+  } catch (e) {
+    return null;
+  }
+}
+
+function savePrefs(partialPrefs) {
+  try {
+    const prefs = { ...getStoredPrefs(), ...partialPrefs };
+    // Seul le choix de consentement est conservé en cas de refus.
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs.cookieConsent === "accepted"
+      ? prefs : { cookieConsent: prefs.cookieConsent }));
+  } catch (e) {
+    // Le site reste utilisable lorsque le stockage est indisponible.
+  }
+}
+
+function hasConsent() {
+  return getStoredPrefs()?.cookieConsent === "accepted";
+}
+
+function serializeCart() {
+  return panier.map((item) => ({ nom: item.produit.nom, format: item.format, quantite: item.quantite }));
+}
+
+function initCookieBanner() {
+  const banner = document.querySelector(".cookie-banner");
+  if (!banner) return;
+  if (!["accepted", "declined"].includes(getStoredPrefs()?.cookieConsent)) {
+    banner.hidden = false;
+    requestAnimationFrame(() => requestAnimationFrame(() => banner.classList.add("is-visible")));
+  }
+  banner.querySelector("[data-cookie-accept]").addEventListener("click", () => {
+    savePrefs({ cookieConsent: "accepted", theme: currentThemePreference || "light", lang: currentLang, panier: serializeCart() });
+    closeCookieBanner();
+  });
+  banner.querySelector("[data-cookie-decline]").addEventListener("click", () => {
+    savePrefs({ cookieConsent: "declined" });
+    closeCookieBanner();
+  });
+}
+
+function closeCookieBanner() {
+  const banner = document.querySelector(".cookie-banner");
+  banner.classList.remove("is-visible");
+  setTimeout(() => { banner.hidden = true; }, 400);
+}
+
 const translations = {
   fr: {
+    cookies: {
+      text: "Nous utilisons des cookies pour mémoriser vos préférences (langue, thème, panier) et améliorer votre expérience sur ce site.",
+      accept: "Accepter",
+      decline: "Refuser",
+    },
     nav: {
       yaourt: "YAOURT",
       dessert: "DESSERT",
@@ -90,6 +148,11 @@ const translations = {
     },
   },
   en: {
+    cookies: {
+      text: "We use cookies to remember your preferences (language, theme, cart) and improve your experience on this site.",
+      accept: "Accept",
+      decline: "Decline",
+    },
     nav: {
       yaourt: "YOGURT",
       dessert: "DESSERT",
@@ -790,6 +853,7 @@ function updateCart() {
   checkout.textContent = translations[currentLang].detail.checkout;
   document.querySelector(".drawer-header h2").textContent = translations[currentLang].detail.cartTitle;
   document.querySelector("[data-cart-close]").setAttribute("aria-label", translations[currentLang].detail.close);
+  if (hasConsent()) savePrefs({ panier: serializeCart() });
 }
 
 function showToast(message) {
@@ -911,7 +975,8 @@ function closeCheckoutContact() {
 }
 
 function initTheme() {
-  applyTheme(currentThemePreference || "light");
+  const stored = hasConsent() ? getStoredPrefs() : null;
+  applyTheme(["light", "dark", "system"].includes(stored?.theme) ? stored.theme : currentThemePreference || "light");
 }
 
 function applyTheme(theme) {
@@ -933,6 +998,7 @@ function applyTheme(theme) {
   document.querySelectorAll(".theme-dropdown__item").forEach((item) => {
     item.classList.toggle("theme-dropdown__item--active", item.dataset.theme === theme);
   });
+  if (hasConsent()) savePrefs({ theme });
 }
 
 function toggleThemeMenu() {
@@ -1021,6 +1087,9 @@ function applyAboutTranslations(about) {
 function applyLanguage(lang = currentLang) {
   currentLang = lang;
   const t = translations[currentLang];
+  document.querySelector(".cookie-banner__text").textContent = t.cookies.text;
+  document.querySelector("[data-cookie-accept]").textContent = t.cookies.accept;
+  document.querySelector("[data-cookie-decline]").textContent = t.cookies.decline;
   const navLeft = document.querySelectorAll(".navbar__group--left a");
   const navRight = document.querySelectorAll(".navbar__group--right a");
   navLeft[0].textContent = t.nav.yaourt;
@@ -1074,6 +1143,7 @@ function applyLanguage(lang = currentLang) {
   updateProductDetail();
   updateHeroContentFromActiveSlide();
   updateWishlistButton();
+  if (hasConsent()) savePrefs({ lang });
 }
 
 function toggleLanguageMenu() {
@@ -1209,8 +1279,18 @@ function initEventListeners() {
 }
 
 function init() {
+  initCookieBanner();
   if (typeof gsap === "undefined") return;
   if (typeof ScrollTrigger !== "undefined") gsap.registerPlugin(ScrollTrigger);
+  const stored = hasConsent() ? getStoredPrefs() : null;
+  if (["fr", "en"].includes(stored?.lang)) currentLang = stored.lang;
+  if (Array.isArray(stored?.panier)) {
+    stored.panier.forEach((saved) => {
+      if (!saved || !["125g", "150g", "200g"].includes(saved.format) || !Number.isSafeInteger(saved.quantite) || saved.quantite <= 0) return;
+      const produit = catalogue.find((p) => p.nom === saved.nom);
+      if (produit) panier.push({ produit: { ...produit }, format: saved.format, quantite: saved.quantite });
+    });
+  }
   initTheme();
   applyLanguage(currentLang);
   renderProductGrid();
