@@ -185,7 +185,7 @@
           <div class="accordions" data-accordion-group>
             <article class="accordion-item">
               <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="accordion-details">
-                Détails <span class="accordion-chevron" aria-hidden="true">⌄</span>
+                <span class="accordion-label">Détails</span> <span class="accordion-chevron" aria-hidden="true">⌄</span>
               </button>
               <div class="accordion-panel" id="accordion-details" hidden>
                 <p>Détails à venir.</p>
@@ -193,18 +193,10 @@
             </article>
             <article class="accordion-item">
               <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="accordion-delivery">
-                Livraison et Retours <span class="accordion-chevron" aria-hidden="true">⌄</span>
+                <span class="accordion-label">Livraison et Retours</span> <span class="accordion-chevron" aria-hidden="true">⌄</span>
               </button>
               <div class="accordion-panel" id="accordion-delivery" hidden>
                 <p>Livraison en moins de 24h sur l'ensemble de notre zone de couverture. Les retours sont possibles pour tout produit non ouvert, selon nos conditions.</p>
-              </div>
-            </article>
-            <article class="accordion-item">
-              <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="accordion-reviews">
-                Avis (<span class="review-count">24</span>) <span class="accordion-chevron" aria-hidden="true">⌄</span>
-              </button>
-              <div class="accordion-panel" id="accordion-reviews" hidden>
-                <p>Nos clients apprécient sa texture crémeuse, son goût franc et sa simplicité.</p>
               </div>
             </article>
           </div>
@@ -276,6 +268,36 @@
           </div>
         </div>
 
+        <div class="about-page__section" data-about-legal>
+            <h2 class="about-page__section-title">Mentions légales & confidentialité</h2>
+            <div class="accordions about-page__accordions" data-accordion-group>
+                <article class="accordion-item">
+                    <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="legal-mentions"><span class="accordion-label">Mentions légales</span> <span class="accordion-chevron" aria-hidden="true">⌄</span></button>
+                    <div class="accordion-panel" id="legal-mentions" hidden>
+                        <p>Seton's Delight est une entreprise proposant des produits alimentaires artisanaux (yaourts, desserts, plats) à la commande. Les informations légales complètes de l'entreprise (raison sociale, adresse, numéro d'immatriculation) seront communiquées sur demande via nos canaux de contact WhatsApp ou Instagram.</p>
+                    </div>
+                </article>
+                <article class="accordion-item">
+                    <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="legal-privacy"><span class="accordion-label">Politique de confidentialité</span> <span class="accordion-chevron" aria-hidden="true">⌄</span></button>
+                    <div class="accordion-panel" id="legal-privacy" hidden>
+                        <p>Nous respectons votre vie privée. Les seules données mémorisées sur ce site (langue, thème d'affichage, contenu du panier) sont stockées localement dans votre navigateur, uniquement si vous avez accepté les cookies, et ne sont jamais transmises à des tiers. Vos commandes sont finalisées directement via WhatsApp ou Instagram, en dehors de ce site.</p>
+                    </div>
+                </article>
+                <article class="accordion-item">
+                    <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="legal-cookies"><span class="accordion-label">Gestion des cookies</span> <span class="accordion-chevron" aria-hidden="true">⌄</span></button>
+                    <div class="accordion-panel" id="legal-cookies" hidden>
+                        <p>Ce site utilise des cookies uniquement pour mémoriser vos préférences de navigation (langue, thème, panier). Vous pouvez accepter ou refuser ces cookies via le bandeau affiché lors de votre première visite. Aucun cookie de suivi publicitaire ou d'analyse tierce n'est utilisé sur ce site.</p>
+                    </div>
+                </article>
+                <article class="accordion-item">
+                    <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="legal-conditions"><span class="accordion-label">Conditions générales</span> <span class="accordion-chevron" aria-hidden="true">⌄</span></button>
+                    <div class="accordion-panel" id="legal-conditions" hidden>
+                        <p>Les commandes passées via ce site sont confirmées manuellement par notre équipe via WhatsApp ou Instagram. Les prix affichés sont donnés à titre indicatif et peuvent être ajustés selon les quantités ou options choisies lors de la confirmation de commande.</p>
+                    </div>
+                </article>
+            </div>
+        </div>
+
         <div class="about-page__cta">
           <p>Une question, une demande particulière ou une commande spéciale à organiser ?</p>
           <button class="about-page__cta-btn" type="button" data-about-contact>NOUS CONTACTER</button>
@@ -290,7 +312,7 @@
       <div class="header-search__results" data-header-search-results></div>
     </div>
     <div class="drawer-backdrop" hidden></div>
-    <aside class="cart-drawer" aria-hidden="true" aria-label="Votre panier">
+    <aside class="cart-drawer" aria-hidden="true" inert aria-label="Votre panier">
       <div class="drawer-header"><h2>Panier</h2><button type="button" aria-label="Fermer le panier" data-cart-close>×</button></div>
       <div class="cart-items"></div>
       <p class="cart-empty">Votre panier est vide.</p>
@@ -299,6 +321,11 @@
         <button class="checkout-button cart-drawer__checkout" type="button" data-checkout disabled>Passer commande</button>
       </div>
     </aside>
+<aside class="wishlist-drawer" aria-hidden="true" inert aria-label="Votre liste de souhaits">
+    <div class="drawer-header"><h2>Wishlist</h2><button type="button" aria-label="Fermer la wishlist" data-wishlist-close>×</button></div>
+    <div class="wishlist-items"></div>
+    <p class="wishlist-empty">Votre liste de souhaits est vide.</p>
+</aside>
     <section class="checkout-contact" aria-hidden="true">
       <button class="checkout-contact__close" type="button" aria-label="Fermer">×</button>
       <div class="checkout-contact__content">

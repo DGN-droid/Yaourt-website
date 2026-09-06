@@ -43,7 +43,7 @@ function initCookieBanner() {
     requestAnimationFrame(() => requestAnimationFrame(() => banner.classList.add("is-visible")));
   }
   banner.querySelector("[data-cookie-accept]").addEventListener("click", () => {
-    savePrefs({ cookieConsent: "accepted", theme: currentThemePreference || "light", lang: currentLang, panier: serializeCart() });
+    savePrefs({ cookieConsent: "accepted", theme: currentThemePreference || "light", lang: currentLang, panier: serializeCart(), wishlist });
     closeCookieBanner();
   });
   banner.querySelector("[data-cookie-decline]").addEventListener("click", () => {
@@ -83,6 +83,17 @@ const translations = {
       empty: "Aucun produit ne correspond à cette sélection.",
     },
     about: {
+      legal: {
+        "title": "Mentions légales & confidentialité",
+        "mentionsTitle": "Mentions légales",
+        "mentionsText": "Seton's Delight est une entreprise proposant des produits alimentaires artisanaux (yaourts, desserts, plats) à la commande. Les informations légales complètes de l'entreprise (raison sociale, adresse, numéro d'immatriculation) seront communiquées sur demande via nos canaux de contact WhatsApp ou Instagram.",
+        "privacyTitle": "Politique de confidentialité",
+        "privacyText": "Nous respectons votre vie privée. Les seules données mémorisées sur ce site (langue, thème d'affichage, contenu du panier) sont stockées localement dans votre navigateur, uniquement si vous avez accepté les cookies, et ne sont jamais transmises à des tiers. Vos commandes sont finalisées directement via WhatsApp ou Instagram, en dehors de ce site.",
+        "cookiesTitle": "Gestion des cookies",
+        "cookiesText": "Ce site utilise des cookies uniquement pour mémoriser vos préférences de navigation (langue, thème, panier). Vous pouvez accepter ou refuser ces cookies via le bandeau affiché lors de votre première visite. Aucun cookie de suivi publicitaire ou d'analyse tierce n'est utilisé sur ce site.",
+        "conditionsTitle": "Conditions générales",
+        "conditionsText": "Les commandes passées via ce site sont confirmées manuellement par notre équipe via WhatsApp ou Instagram. Les prix affichés sont donnés à titre indicatif et peuvent être ajustés selon les quantités ou options choisies lors de la confirmation de commande."
+      },
       back: "← Retour",
       eyebrow: "NOTRE HISTOIRE",
       title: "Le goût de l'authentique, depuis toujours",
@@ -107,11 +118,10 @@ const translations = {
       addToCart: "Ajouter au panier",
       wishlistAdd: "Ajouter à la wishlist",
       wishlistRemove: "Retirer de la wishlist",
-      accordion: ["Détails", "Livraison et Retours", "Avis"],
+      accordion: ["Détails", "Livraison et Retours"],
       accordionContent: [
         "Détails personnalisés selon le produit.",
         "Livraison en moins de 24h sur l'ensemble de notre zone de couverture. Les retours sont possibles pour tout produit non ouvert, selon nos conditions.",
-        "Nos clients apprécient sa texture crémeuse, son goût franc et sa simplicité.",
       ],
       close: "Fermer le panier",
       searchPlaceholder: "RECHERCHER",
@@ -140,6 +150,8 @@ const translations = {
       empty: "Aucun produit ne correspond à cette sélection.",
     },
     misc: {
+      wishlistEmpty: "Votre liste de souhaits est vide.",
+      wishlistClose: "Fermer la wishlist",
       openSearch: "Rechercher",
       searchPlaceholder: "Rechercher un produit...",
       searchEmpty: "Aucun résultat",
@@ -171,6 +183,17 @@ const translations = {
       empty: "No product matches this selection.",
     },
     about: {
+      legal: {
+        "title": "Legal notice & privacy",
+        "mentionsTitle": "Legal notice",
+        "mentionsText": "Seton's Delight is a business offering artisan food products (yogurts, desserts, dishes) made to order. Full legal information about the business (registered name, address, registration number) will be provided on request through our WhatsApp or Instagram contact channels.",
+        "privacyTitle": "Privacy policy",
+        "privacyText": "We respect your privacy. The only data remembered on this site (language, display theme, cart contents) is stored locally in your browser, only if you have accepted cookies, and is never shared with third parties. Your orders are finalized directly through WhatsApp or Instagram, outside this site.",
+        "cookiesTitle": "Cookie management",
+        "cookiesText": "This site uses cookies only to remember your browsing preferences (language, theme, cart). You can accept or decline these cookies using the banner shown on your first visit. No advertising tracking or third-party analytics cookies are used on this site.",
+        "conditionsTitle": "General terms and conditions",
+        "conditionsText": "Orders placed through this site are confirmed manually by our team through WhatsApp or Instagram. Displayed prices are indicative and may be adjusted according to the quantities or options chosen when the order is confirmed."
+      },
       back: "← Back",
       eyebrow: "OUR STORY",
       title: "The taste of authenticity, always",
@@ -195,11 +218,10 @@ const translations = {
       addToCart: "Add to cart",
       wishlistAdd: "Add to wishlist",
       wishlistRemove: "Remove from wishlist",
-      accordion: ["Details", "Delivery & Returns", "Reviews"],
+      accordion: ["Details", "Delivery & Returns"],
       accordionContent: [
         "Product-specific details.",
         "Delivery in under 24 hours across our entire coverage area. Returns are possible for any unopened product, as per our conditions.",
-        "Our customers appreciate its creamy texture, its straightforward taste, and its simplicity.",
       ],
       close: "Close cart",
       searchPlaceholder: "SEARCH",
@@ -229,6 +251,8 @@ const translations = {
     },
     misc: {
       openSearch: "Search",
+      wishlistEmpty: "Your wishlist is empty.",
+      wishlistClose: "Close wishlist",
       searchPlaceholder: "Search for a product...",
       searchEmpty: "No results",
       reviewLabel: "Reviews",
@@ -796,9 +820,9 @@ function closeAboutPageInstant() {
 }
 
 function initAccordions() {
-  document.querySelectorAll("[data-accordion-group]").forEach((group) => {
-    const items = group.querySelectorAll(".accordion-item");
-    items.forEach((item) => {
+  document.querySelectorAll(".accordion-item").forEach((item) => {
+    const group = item.closest("[data-accordion-group]");
+    const items = group ? group.querySelectorAll(".accordion-item") : [item];
       const trigger = item.querySelector(".accordion-trigger");
       if (trigger.dataset.accordionReady) return;
       trigger.dataset.accordionReady = "true";
@@ -817,7 +841,6 @@ function initAccordions() {
           }
         });
       });
-    });
   });
 }
 
@@ -878,20 +901,94 @@ function addCurrentProductToCart() {
 }
 
 function openCart() {
-  const drawer = document.querySelector(".cart-drawer");
+  openDrawer(".cart-drawer");
+}
+
+function openDrawer(selector) {
+  const drawer = document.querySelector(selector);
   const backdrop = document.querySelector(".drawer-backdrop");
+  document.querySelectorAll(".cart-drawer, .wishlist-drawer").forEach((other) => {
+    gsap.killTweensOf(other);
+    if (other !== drawer) {
+      other.setAttribute("aria-hidden", "true");
+      other.inert = true;
+      gsap.set(other, { xPercent: 0 });
+    }
+  });
+  gsap.killTweensOf(backdrop);
   backdrop.hidden = false;
+  drawer.inert = false;
   drawer.setAttribute("aria-hidden", "false");
   gsap.to(backdrop, { autoAlpha: 1, duration: 0.2 });
   gsap.to(drawer, { xPercent: -100, duration: 0.35, ease: "power3.out" });
 }
 
 function closeCart() {
-  const drawer = document.querySelector(".cart-drawer");
   const backdrop = document.querySelector(".drawer-backdrop");
-  drawer.setAttribute("aria-hidden", "true");
-  gsap.to(drawer, { xPercent: 0, duration: 0.3, ease: "power2.in" });
+  document.querySelectorAll(".cart-drawer, .wishlist-drawer").forEach((drawer) => {
+    gsap.killTweensOf(drawer);
+    drawer.setAttribute("aria-hidden", "true");
+    drawer.inert = true;
+    gsap.to(drawer, { xPercent: 0, duration: 0.3, ease: "power2.in" });
+  });
+  gsap.killTweensOf(backdrop);
   gsap.to(backdrop, { autoAlpha: 0, duration: 0.2, onComplete: () => { backdrop.hidden = true; } });
+}
+
+function renderWishlistItems() {
+  const t = translations[currentLang];
+  const drawer = document.querySelector(".wishlist-drawer");
+  drawer.setAttribute("aria-label", t.nav.wishlist);
+  drawer.querySelector("h2").textContent = t.nav.wishlist;
+  drawer.querySelector("[data-wishlist-close]").setAttribute("aria-label", t.misc.wishlistClose);
+  const empty = drawer.querySelector(".wishlist-empty");
+  empty.hidden = wishlist.length > 0;
+  empty.textContent = t.misc.wishlistEmpty;
+  drawer.querySelector(".wishlist-items").innerHTML = wishlist.map((productIndex) => {
+    const produit = catalogue[productIndex];
+    return `
+      <div class="wishlist-item">
+        <div class="wishlist-item-image" style="background-image: url('${produit.image}')"></div>
+        <div class="wishlist-item-info">
+          <span class="wishlist-item-name">${getLocalizedText(produit, "nom")}</span>
+          <span class="wishlist-item-price">${produit.prix}</span>
+        </div>
+        <button class="wishlist-item-remove" data-wishlist-index="${productIndex}" type="button" aria-label="${t.detail.wishlistRemove}">×</button>
+        <button class="wishlist-item-add-cart" data-wishlist-add-cart="${productIndex}" type="button">${t.detail.addToCart}</button>
+      </div>`;
+  }).join("");
+}
+
+function openWishlistDrawer() {
+  renderWishlistItems();
+  openDrawer(".wishlist-drawer");
+}
+
+function closeWishlistDrawer() {
+  closeCart();
+}
+
+function handleWishlistClick(event) {
+  const removeButton = event.target.closest("[data-wishlist-index]");
+  const addButton = event.target.closest("[data-wishlist-add-cart]");
+  if (removeButton) {
+    const position = wishlist.indexOf(Number(removeButton.dataset.wishlistIndex));
+    if (position === -1) return;
+    wishlist.splice(position, 1);
+    renderWishlistItems();
+    updateWishlistButton();
+    if (hasConsent()) savePrefs({ wishlist });
+  }
+  if (addButton) {
+    const index = Number(addButton.dataset.wishlistAddCart);
+    if (!wishlist.includes(index)) return;
+    const produit = catalogue[index];
+    const existing = panier.find((item) => item.produit.nom === produit.nom && item.format === "125g");
+    if (existing) existing.quantite += 1;
+    else panier.push({ produit: { ...produit }, format: "125g", quantite: 1 });
+    updateCart();
+    showToast(translations[currentLang].toasts.addedToCart);
+  }
 }
 
 function removeCartItem(index) {
@@ -1012,6 +1109,8 @@ function toggleThemeMenu() {
 function toggleWishlist() {
   const index = wishlist.indexOf(produitActuel);
   if (index === -1) wishlist.push(produitActuel); else wishlist.splice(index, 1);
+  if (hasConsent()) savePrefs({ wishlist });
+  renderWishlistItems();
   updateWishlistButton();
   showToast(index === -1 ? translations[currentLang].toasts.addedToWishlist : translations[currentLang].toasts.removedFromWishlist);
 }
@@ -1076,10 +1175,18 @@ function applyAboutTranslations(about) {
   });
   sections[3].querySelector(".about-page__section-title").textContent = t.servicesTitle;
   sections[3].querySelector(".about-page__text").textContent = t.servicesText;
-  about.querySelectorAll(".about-page__accordions .accordion-item").forEach((item, index) => {
+  sections[3].querySelectorAll(".about-page__accordions .accordion-item").forEach((item, index) => {
     item.querySelector(".accordion-label").textContent = t.delivery[index][0];
     item.querySelector(".accordion-panel p").textContent = t.delivery[index][1];
   });
+  const legal = about.querySelector("[data-about-legal]");
+  if (legal) {
+    legal.querySelector(".about-page__section-title").textContent = t.legal.title;
+    ["mentions", "privacy", "cookies", "conditions"].forEach((key) => {
+      legal.querySelector('[aria-controls="legal-' + key + '"] .accordion-label').textContent = t.legal[key + "Title"];
+      legal.querySelector("#legal-" + key + " p").textContent = t.legal[key + "Text"];
+    });
+  }
   about.querySelector(".about-page__cta p").textContent = t.ctaText;
   about.querySelector("[data-about-contact]").textContent = t.ctaButton;
 }
@@ -1143,6 +1250,7 @@ function applyLanguage(lang = currentLang) {
   updateProductDetail();
   updateHeroContentFromActiveSlide();
   updateWishlistButton();
+  renderWishlistItems();
   if (hasConsent()) savePrefs({ lang });
 }
 
@@ -1232,6 +1340,7 @@ function initEventListeners() {
   });
   document.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {
+      closeCart();
       closeSearch();
       closeMobileMenu();
     }
@@ -1269,7 +1378,9 @@ function initEventListeners() {
     document.querySelector(".theme-dropdown").hidden = true;
     document.querySelector(".theme-selector__toggle").setAttribute("aria-expanded", "false");
   }));
-  document.querySelector("[data-wishlist-link]").addEventListener("click", (event) => { event.preventDefault(); showToast(`${wishlist.length} produit${wishlist.length > 1 ? "s" : ""} dans votre wishlist`); });
+  document.querySelector("[data-wishlist-link]").addEventListener("click", (event) => { event.preventDefault(); openWishlistDrawer(); });
+  document.querySelector("[data-wishlist-close]").addEventListener("click", closeWishlistDrawer);
+  document.querySelector(".wishlist-items").addEventListener("click", handleWishlistClick);
   document.querySelector("[data-blog-link]").addEventListener("click", (event) => { event.preventDefault(); showToast("Le journal arrive bientôt"); });
   const grid = document.querySelector(".catalog-grid");
   grid.addEventListener("click", (event) => { const card = event.target.closest(".catalog-card"); if (card) { produitActuel = Number(card.dataset.productIndex); showProductDetail(null, card.querySelector(".catalog-card__image")); } });
@@ -1284,6 +1395,9 @@ function init() {
   if (typeof ScrollTrigger !== "undefined") gsap.registerPlugin(ScrollTrigger);
   const stored = hasConsent() ? getStoredPrefs() : null;
   if (["fr", "en"].includes(stored?.lang)) currentLang = stored.lang;
+  if (Array.isArray(stored?.wishlist)) {
+    wishlist.push(...new Set(stored.wishlist.filter((index) => Number.isInteger(index) && index >= 0 && index < catalogue.length)));
+  }
   if (Array.isArray(stored?.panier)) {
     stored.panier.forEach((saved) => {
       if (!saved || !["125g", "150g", "200g"].includes(saved.format) || !Number.isSafeInteger(saved.quantite) || saved.quantite <= 0) return;
@@ -1296,7 +1410,6 @@ function init() {
   renderProductGrid();
   updateCart();
   updateWishlistButton();
-  document.querySelector(".review-count").textContent = Math.floor(Math.random() * 41) + 10;
   initHeroSwiper();
   initHeroAnimation();
   initAccordions();
