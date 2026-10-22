@@ -6,9 +6,9 @@ A modern, responsive, and interactive showcase website built for a yogurt brand.
 
 ### Features
 
-- **Interactive UI**: Custom JavaScript logic for smooth user experience and animations[cite: 7].
-- **Responsive Layout**: Designed to adapt seamlessly across desktop and mobile devices[cite: 7].
-- **Optimized Assets**: Structured media assets and custom styling architecture (`css/`, `js/`, `asset/images/`)[cite: 7].
+- **Interactive UI**: Custom JavaScript logic for smooth user experience and animations.
+- **Responsive Layout**: Designed to adapt seamlessly across desktop and mobile devices.
+- **Optimized Assets**: Structured media assets and custom styling architecture (`css/`, `js/`, `asset/images/`).
 
 ---
 
